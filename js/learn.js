@@ -150,130 +150,307 @@
 
     function openLesson(lessonId) {
 
-        const lesson =
-            lessons[lessonId];
+    const lesson =
+        lessons[lessonId];
 
 
-        if (!lesson) {
+    if (!lesson) {
 
-            console.error(
-                "Learn error: lesson not found.",
-                lessonId
-            );
+        console.error(
+            "Learn error: lesson not found.",
+            lessonId
+        );
 
-            return;
+        return;
 
-        }
-
-
-        const container =
-            getLessonList();
+    }
 
 
-        if (!container) {
-
-            return;
-
-        }
+    const container =
+        getLessonList();
 
 
-        let examplesHTML = "";
+    if (!container) {
+
+        return;
+
+    }
 
 
-        lesson.examples.forEach(
-            function (example, index) {
+    /* --------------------------------------
+       Check completion status
+    -------------------------------------- */
 
-                examplesHTML += `
+    let isCompleted = false;
 
-                    <div class="exampleCard">
 
-                        <div class="exampleNumber">
-                            Example ${index + 1}
-                        </div>
+    if (
+        typeof EBStorage !== "undefined" &&
+        typeof EBStorage.isLessonCompleted === "function"
+    ) {
 
-                        <div class="hindiText">
-                            ${example.hindi}
-                        </div>
+        isCompleted =
+            EBStorage.isLessonCompleted(lessonId);
 
-                        <div class="englishText">
-                            ${example.english}
-                        </div>
+    }
 
+
+    /* --------------------------------------
+       Build examples
+    -------------------------------------- */
+
+    let examplesHTML = "";
+
+
+    lesson.examples.forEach(
+        function (example, index) {
+
+            examplesHTML += `
+
+                <div class="exampleCard">
+
+                    <div class="exampleNumber">
+                        Example ${index + 1}
                     </div>
 
-                `;
+                    <div class="hindiText">
+                        ${example.hindi}
+                    </div>
+
+                    <div class="englishText">
+                        ${example.english}
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    /* --------------------------------------
+       Completion button
+    -------------------------------------- */
+
+    const completionButton =
+        isCompleted
+
+            ? `
+                <button
+                    id="completeLesson"
+                    class="primaryButton"
+                    disabled
+                >
+                    ✅ Lesson Completed
+                </button>
+              `
+
+            : `
+                <button
+                    id="completeLesson"
+                    class="primaryButton"
+                >
+                    ✅ Complete Lesson
+                </button>
+              `;
+
+
+    const completionMessage =
+        isCompleted
+
+            ? `
+                <div
+                    id="completionMessage"
+                    class="speechStatus"
+                >
+                    🎉 You have completed this lesson!
+                </div>
+              `
+
+            : `
+                <div
+                    id="completionMessage"
+                    class="speechStatus"
+                    style="display:none;"
+                >
+                </div>
+              `;
+
+
+    /* --------------------------------------
+       Render lesson
+    -------------------------------------- */
+
+    container.innerHTML = `
+
+        <div class="lessonCard lessonContent">
+
+            <span class="lessonNumber">
+                Lesson ${lessonId}
+            </span>
+
+            <h3>
+                ${lesson.title}
+            </h3>
+
+            <p>
+                ${lesson.description}
+            </p>
+
+
+            <div class="examplesSection">
+
+                <h3>
+                    Hindi → English
+                </h3>
+
+                ${examplesHTML}
+
+            </div>
+
+
+            ${completionMessage}
+
+
+            ${completionButton}
+
+
+            <button
+                id="backToLessons"
+                class="secondaryButton"
+            >
+                ← Back to Lessons
+            </button>
+
+        </div>
+
+    `;
+
+
+    /* ======================================
+       COMPLETE LESSON
+    ====================================== */
+
+    const completeButton =
+        document.getElementById(
+            "completeLesson"
+        );
+
+
+    if (
+        completeButton &&
+        !isCompleted
+    ) {
+
+        completeButton.addEventListener(
+            "click",
+            function () {
+
+                /* ------------------------------
+                   Make sure storage is available
+                ------------------------------ */
+
+                if (
+                    typeof EBStorage === "undefined" ||
+                    typeof EBStorage.markLessonCompleted !==
+                    "function"
+                ) {
+
+                    console.error(
+                        "Learn error: storage service unavailable."
+                    );
+
+                    return;
+
+                }
+
+
+                /* ------------------------------
+                   Save completion
+                ------------------------------ */
+
+                EBStorage.markLessonCompleted(
+                    lessonId
+                );
+
+
+                /* ------------------------------
+                   Update button
+                ------------------------------ */
+
+                completeButton.textContent =
+                    "✅ Lesson Completed";
+
+                completeButton.disabled = true;
+
+
+                /* ------------------------------
+                   Show completion message
+                ------------------------------ */
+
+                const message =
+                    document.getElementById(
+                        "completionMessage"
+                    );
+
+
+                if (message) {
+
+                    message.textContent =
+                        "🎉 You have completed this lesson!";
+
+                    message.style.display =
+                        "block";
+
+                }
+
+
+                console.log(
+                    "Lesson completed:",
+                    lessonId
+                );
 
             }
         );
 
-
-        container.innerHTML = `
-
-            <div class="lessonCard lessonContent">
-
-                <span class="lessonNumber">
-                    Lesson ${lessonId}
-                </span>
-
-                <h3>
-                    ${lesson.title}
-                </h3>
-
-                <p>
-                    ${lesson.description}
-                </p>
+    }
 
 
-                <div class="examplesSection">
+    /* ======================================
+       BACK TO LESSON LIST
+    ====================================== */
 
-                    <h3>
-                        Hindi → English
-                    </h3>
-
-                    ${examplesHTML}
-
-                </div>
-
-
-                <button
-                    id="backToLessons"
-                    class="secondaryButton"
-                >
-                    ← Back to Lessons
-                </button>
-
-            </div>
-
-        `;
+    const backButton =
+        document.getElementById(
+            "backToLessons"
+        );
 
 
-        const backButton =
-            document.getElementById(
-                "backToLessons"
-            );
+    if (backButton) {
 
+        backButton.addEventListener(
+            "click",
+            function () {
 
-        if (backButton) {
+                showLessonList();
 
-            backButton.addEventListener(
-                "click",
-                function () {
-
-                    showLessonList();
-
-                }
-            );
-
-        }
-
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+            }
+        );
 
     }
 
+
+    /* ======================================
+       SCROLL TO TOP
+    ====================================== */
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
 
     /* ==========================================
        INITIALIZE LEARN MODULE
