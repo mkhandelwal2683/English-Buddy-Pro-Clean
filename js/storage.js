@@ -155,21 +155,55 @@
 
 
     /* ==========================================
-       XP
-    =========================================== */
+   XP
+========================================== */
 
-    function getXP() {
+function getXP() {
 
-        return load(KEYS.XP, 0);
+    return load(KEYS.XP, 0);
+
+}
+
+
+function saveXP(xp) {
+
+    return save(KEYS.XP, xp);
+
+}
+
+
+function addXP(amount) {
+
+    if (
+        typeof amount !== "number" ||
+        !Number.isFinite(amount) ||
+        amount <= 0
+    ) {
+
+        console.error(
+            "Storage XP error: invalid XP amount.",
+            amount
+        );
+
+        return getXP();
 
     }
 
 
-    function saveXP(xp) {
+    const currentXP =
+        getXP();
 
-        return save(KEYS.XP, xp);
 
-    }
+    const newXP =
+        currentXP + amount;
+
+
+    saveXP(newXP);
+
+
+    return newXP;
+
+}
 
 
     /* ==========================================
@@ -301,6 +335,8 @@
 
         saveXP: saveXP,
 
+        addXP: addXP,
+       
         getLevel: getLevel,
 
         saveLevel: saveLevel,
