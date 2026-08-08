@@ -177,7 +177,7 @@ function updateHomeXP() {
 
 
     xpElement.textContent =
-        currentXP + " XP";
+        currentXP;
 
 }
 
