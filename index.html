@@ -1,0 +1,282 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8"><meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<meta
+    name="theme-color"
+    content="#2563eb"
+>
+
+<title>English Buddy Pro</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head><body><!-- ==========================================
+     APP HEADER
+=========================================== -->
+
+<header class="appHeader">
+
+    <h1>English Buddy Pro</h1>
+
+    <p>AI English Teacher</p>
+
+</header>
+
+
+<!-- ==========================================
+     NAVIGATION
+=========================================== -->
+
+<nav class="bottomNav">
+
+    <button
+        class="navButton active"
+        data-page="home"
+    >
+        🏠
+        <span>Home</span>
+    </button>
+
+    <button
+        class="navButton"
+        data-page="learn"
+    >
+        📚
+        <span>Learn</span>
+    </button>
+
+    <button
+        class="navButton"
+        data-page="speak"
+    >
+        🎙️
+        <span>Speak</span>
+    </button>
+
+</nav>
+
+
+<!-- ==========================================
+     MAIN APP
+=========================================== -->
+
+<main id="app">
+
+
+    <!-- ======================================
+         HOME PAGE
+    ======================================= -->
+
+    <section
+        id="page-home"
+        class="page active"
+    >
+
+        <div class="welcomeCard">
+
+            <h2>Welcome! 👋</h2>
+
+            <p>
+                Learn English step by step.
+            </p>
+
+        </div>
+
+
+        <div class="statsGrid">
+
+            <div class="statCard">
+
+                <span class="statIcon">⭐</span>
+
+                <h3>XP</h3>
+
+                <strong id="homeXP">0</strong>
+
+            </div>
+
+
+            <div class="statCard">
+
+                <span class="statIcon">🏆</span>
+
+                <h3>Level</h3>
+
+                <strong id="homeLevel">1</strong>
+
+            </div>
+
+
+            <div class="statCard">
+
+                <span class="statIcon">🔥</span>
+
+                <h3>Streak</h3>
+
+                <strong id="homeStreak">0</strong>
+
+            </div>
+
+
+            <div class="statCard">
+
+                <span class="statIcon">📈</span>
+
+                <h3>Progress</h3>
+
+                <strong id="homeProgress">0%</strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="sectionCard">
+
+            <h2>Start Learning</h2>
+
+            <p>
+                Build your English skills one step at a time.
+            </p>
+
+            <button
+                class="primaryButton"
+                data-page="learn"
+            >
+                📚 Start Learning
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ======================================
+         LEARN PAGE
+    ======================================= -->
+
+    <section
+        id="page-learn"
+        class="page"
+    >
+
+        <div class="pageTitle">
+
+            <h2>📚 Learn English</h2>
+
+            <p>
+                Learn useful English sentences.
+            </p>
+
+        </div>
+
+
+        <div id="lessonList">
+
+            <div class="lessonCard">
+
+                <span class="lessonNumber">
+                    Lesson 1
+                </span>
+
+                <h3>Daily English Basics</h3>
+
+                <p>
+                    Learn simple English sentences
+                    for everyday conversations.
+                </p>
+
+                <button
+                    class="primaryButton lessonButton"
+                    data-lesson="1"
+                >
+                    Start Lesson
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ======================================
+         SPEAK PAGE
+    ======================================= -->
+
+    <section
+        id="page-speak"
+        class="page"
+    >
+
+        <div class="pageTitle">
+
+            <h2>🎙️ Speak English</h2>
+
+            <p>
+                Practice speaking English using
+                your microphone.
+            </p>
+
+        </div>
+
+
+        <div class="speechCard">
+
+            <button
+                id="startSpeaking"
+                class="primaryButton"
+            >
+                🎙️ Start Speaking
+            </button>
+
+
+            <button
+                id="stopSpeaking"
+                class="secondaryButton"
+                disabled
+            >
+                ⏹️ Stop
+            </button>
+
+
+            <div
+                id="speechStatus"
+                class="speechStatus"
+            >
+                Ready to speak
+            </div>
+
+
+            <div class="transcriptBox">
+
+                <h3>Your Speech</h3>
+
+                <p id="speechTranscript">
+                    Your speech will appear here.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ==========================================
+     JAVASCRIPT
+=========================================== -->
+
+<script src="js/storage.js"></script>
+<script src="js/learn.js"></script>
+<script src="services/speech.js"></script>
+<script src="js/speak.js"></script>
+<script src="js/app.js"></script>
+
+</body></html>
