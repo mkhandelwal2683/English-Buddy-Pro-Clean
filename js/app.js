@@ -136,7 +136,50 @@
         showPage("home");
 
     }
+   
+/* ==========================================
+   HOME XP DISPLAY
+========================================== */
 
+function updateHomeXP() {
+
+    const xpElement =
+        document.getElementById("homeXP");
+
+
+    if (!xpElement) {
+
+        console.warn(
+            "Home XP element not found."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        typeof EBStorage === "undefined" ||
+        typeof EBStorage.getXP !== "function"
+    ) {
+
+        console.warn(
+            "Storage XP service unavailable."
+        );
+
+        return;
+
+    }
+
+
+    const currentXP =
+        EBStorage.getXP();
+
+
+    xpElement.textContent =
+        currentXP + " XP";
+
+}
 
     /* ==========================================
        APP START
@@ -147,7 +190,7 @@
     function () {
 
         initializeNavigation();
-
+        updateHomeXP();
 
         /* --------------------------------------
            Initialize Learn Module
