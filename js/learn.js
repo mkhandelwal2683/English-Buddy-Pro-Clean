@@ -364,7 +364,6 @@
 
                     }
 
-
                     /* ------------------------------
                        Save completion
                     ------------------------------ */
@@ -373,7 +372,26 @@
                         lessonId
                     );
 
+/* ------------------------------
+   Award XP
+------------------------------ */
 
+let earnedXP = 0;
+
+if (
+    typeof EBStorage.addXP === "function"
+) {
+
+    const previousXP =
+        EBStorage.getXP();
+
+    const newXP =
+        EBStorage.addXP(20);
+
+    earnedXP =
+        newXP - previousXP;
+
+}
                     /* ------------------------------
                        Update button
                     ------------------------------ */
@@ -397,8 +415,9 @@
                     if (message) {
 
                         message.textContent =
-                            "🎉 You have completed this lesson!";
-
+    "🎉 Lesson completed! +" +
+    earnedXP +
+    " XP earned!";
                         message.style.display =
                             "block";
 
