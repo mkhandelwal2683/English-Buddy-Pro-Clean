@@ -464,3 +464,134 @@ button:disabled {
         8px 8px
         calc(8px + env(safe-area-inset-bottom));
 }
+
+/* ==========================================
+   LEARN MODULE
+   Lesson Example Styling
+========================================== */
+
+
+/* ==========================================
+   LESSON CONTENT
+========================================== */
+
+.lessonContent {
+    padding-bottom: 24px;
+}
+
+
+.lessonContent > h3 {
+    font-size: 20px;
+
+    margin-bottom: 6px;
+}
+
+
+.lessonContent > p {
+    margin-bottom: 20px;
+}
+
+
+/* ==========================================
+   EXAMPLES SECTION
+========================================== */
+
+.examplesSection {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+.examplesSection > h3 {
+    font-size: 18px;
+
+    margin-bottom: 12px;
+
+    color: #1e293b;
+}
+
+
+/* ==========================================
+   EXAMPLE CARD
+========================================== */
+
+.exampleCard {
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 14px;
+
+    padding: 15px;
+
+    margin-bottom: 12px;
+}
+
+
+.exampleCard:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ==========================================
+   EXAMPLE NUMBER
+========================================== */
+
+.exampleNumber {
+    display: inline-block;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    color: #2563eb;
+
+    background: #eff6ff;
+
+    padding: 4px 8px;
+
+    border-radius: 7px;
+
+    margin-bottom: 10px;
+}
+
+
+/* ==========================================
+   HINDI SENTENCE
+========================================== */
+
+.hindiText {
+    font-size: 17px;
+
+    font-weight: 600;
+
+    color: #1e293b;
+
+    margin-bottom: 7px;
+
+    line-height: 1.5;
+}
+
+
+/* ==========================================
+   ENGLISH TRANSLATION
+========================================== */
+
+.englishText {
+    font-size: 16px;
+
+    font-weight: 600;
+
+    color: #2563eb;
+
+    line-height: 1.5;
+}
+
+
+/* ==========================================
+   BACK BUTTON
+========================================== */
+
+#backToLessons {
+    margin-top: 8px;
+}
