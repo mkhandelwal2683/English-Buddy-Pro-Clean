@@ -143,17 +143,32 @@
     =========================================== */
 
     document.addEventListener(
-        "DOMContentLoaded",
-        function () {
+    "DOMContentLoaded",
+    function () {
 
-            initializeNavigation();
+        initializeNavigation();
 
-            console.log(
-                "English Buddy Pro: App initialized successfully."
-            );
+
+        /* --------------------------------------
+           Initialize Learn Module
+        -------------------------------------- */
+
+        if (
+            typeof EBLearn !== "undefined" &&
+            typeof EBLearn.initialize === "function"
+        ) {
+
+            EBLearn.initialize();
 
         }
-    );
+
+
+        console.log(
+            "English Buddy Pro: App initialized successfully."
+        );
+
+    }
+);
 
 
 })();
