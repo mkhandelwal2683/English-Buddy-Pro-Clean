@@ -11,7 +11,11 @@
 (function () {
 
     "use strict";
+/* ==========================================
+   LESSON REWARD
+========================================== */
 
+const LESSON_XP = 20;
 
     /* ==========================================
        LESSON DATA
@@ -344,76 +348,102 @@
     ) {
 
         completeButton.addEventListener(
-            "click",
-            function () {
+        completeButton.addEventListener(
+    "click",
+    function () {
 
-                /* ------------------------------
-                   Make sure storage is available
-                ------------------------------ */
+        /* --------------------------------------
+           Make sure storage is available
+        -------------------------------------- */
 
-                if (
-                    typeof EBStorage === "undefined" ||
-                    typeof EBStorage.markLessonCompleted !==
-                    "function"
-                ) {
+        if (
+            typeof EBStorage === "undefined" ||
+            typeof EBStorage.markLessonCompleted !==
+            "function"
+        ) {
 
-                    console.error(
-                        "Learn error: storage service unavailable."
-                    );
+            console.error(
+                "Learn error: storage service unavailable."
+            );
 
-                    return;
+            return;
 
-                }
-
-
-                /* ------------------------------
-                   Save completion
-                ------------------------------ */
-
-                EBStorage.markLessonCompleted(
-                    lessonId
-                );
+        }
 
 
-                /* ------------------------------
-                   Update button
-                ------------------------------ */
+        /* --------------------------------------
+           Save lesson completion
+        -------------------------------------- */
 
-                completeButton.textContent =
-                    "✅ Lesson Completed";
-
-                completeButton.disabled = true;
-
-
-                /* ------------------------------
-                   Show completion message
-                ------------------------------ */
-
-                const message =
-                    document.getElementById(
-                        "completionMessage"
-                    );
-
-
-                if (message) {
-
-                    message.textContent =
-                        "🎉 You have completed this lesson!";
-
-                    message.style.display =
-                        "block";
-
-                }
-
-
-                console.log(
-                    "Lesson completed:",
-                    lessonId
-                );
-
-            }
+        EBStorage.markLessonCompleted(
+            lessonId
         );
 
+
+        /* --------------------------------------
+           Award XP
+        -------------------------------------- */
+
+        const currentXP =
+            EBStorage.getXP();
+
+
+        const newXP =
+            currentXP + LESSON_XP;
+
+
+        EBStorage.saveXP(newXP);
+
+
+        /* --------------------------------------
+           Update completion button
+        -------------------------------------- */
+
+        completeButton.textContent =
+            "✅ Lesson Completed";
+
+        completeButton.disabled = true;
+
+
+        /* --------------------------------------
+           Show completion message
+        -------------------------------------- */
+
+        const message =
+            document.getElementById(
+                "completionMessage"
+            );
+
+
+        if (message) {
+
+            message.textContent =
+                "🎉 Lesson completed! +" +
+                LESSON_XP +
+                " XP earned!";
+
+            message.style.display =
+                "block";
+
+        }
+
+
+        /* --------------------------------------
+           Console confirmation
+        -------------------------------------- */
+
+        console.log(
+            "Lesson completed:",
+            lessonId,
+            "| XP earned:",
+            LESSON_XP,
+            "| Total XP:",
+            newXP
+        );
+
+    }
+);
+      
     }
 
 
