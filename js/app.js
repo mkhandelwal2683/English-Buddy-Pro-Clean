@@ -180,7 +180,50 @@ function updateHomeXP() {
         currentXP;
 
 }
+/* ==========================================
+   HOME PROGRESS DISPLAY
+========================================== */
 
+function updateHomeProgress() {
+
+    const progressElement =
+        document.getElementById("homeProgress");
+
+
+    if (!progressElement) {
+
+        console.warn(
+            "Home Progress element not found."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        typeof EBStorage === "undefined" ||
+        typeof EBStorage.getProgress !== "function"
+    ) {
+
+        console.warn(
+            "Storage Progress service unavailable."
+        );
+
+        return;
+
+    }
+
+
+    const currentProgress =
+        EBStorage.getProgress();
+
+
+    progressElement.textContent =
+        currentProgress + "%";
+
+}
+   
     /* ==========================================
        APP START
     =========================================== */
@@ -191,6 +234,7 @@ function updateHomeXP() {
 
         initializeNavigation();
         updateHomeXP();
+       updateHomeProgress();
 
         /* --------------------------------------
            Initialize Learn Module
