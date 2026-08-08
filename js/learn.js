@@ -392,6 +392,28 @@ if (
         newXP - previousXP;
 
 }
+                   /* ------------------------------
+   Update lesson progress
+------------------------------ */
+
+const totalLessons =
+    Object.keys(lessons).length;
+
+
+const completedLessons =
+    EBStorage.getCompletedLessons().length;
+
+
+const progress =
+    Math.round(
+        (completedLessons / totalLessons) * 100
+    );
+
+
+EBStorage.saveProgress(
+    progress
+);
+                   
                     /* ------------------------------
                        Update button
                     ------------------------------ */
