@@ -20,46 +20,84 @@
 
     const lessons = {
 
-        1: {
+    1: {
 
-            title: "Daily English Basics",
+        title: "Daily English Basics",
 
-            description:
-                "Learn simple English sentences for everyday conversations.",
+        description:
+            "Learn simple English sentences for everyday conversations.",
 
-            examples: [
+        examples: [
 
-                {
-                    hindi: "मैं ठीक हूँ।",
-                    english: "I am fine."
-                },
+            {
+                hindi: "मैं ठीक हूँ।",
+                english: "I am fine."
+            },
 
-                {
-                    hindi: "आप कैसे हैं?",
-                    english: "How are you?"
-                },
+            {
+                hindi: "आप कैसे हैं?",
+                english: "How are you?"
+            },
 
-                {
-                    hindi: "मेरा नाम राहुल है।",
-                    english: "My name is Rahul."
-                },
+            {
+                hindi: "मेरा नाम राहुल है।",
+                english: "My name is Rahul."
+            },
 
-                {
-                    hindi: "मुझे पानी चाहिए।",
-                    english: "I want water."
-                },
+            {
+                hindi: "मुझे पानी चाहिए।",
+                english: "I want water."
+            },
 
-                {
-                    hindi: "धन्यवाद।",
-                    english: "Thank you."
-                }
+            {
+                hindi: "धन्यवाद।",
+                english: "Thank you."
+            }
 
-            ]
+        ]
 
-        }
+    },
 
-    };
 
+    2: {
+
+        title: "Everyday Conversations",
+
+        description:
+            "Learn useful English sentences for daily situations.",
+
+        examples: [
+
+            {
+                hindi: "आप कहाँ जा रहे हैं?",
+                english: "Where are you going?"
+            },
+
+            {
+                hindi: "मैं घर जा रहा हूँ।",
+                english: "I am going home."
+            },
+
+            {
+                hindi: "क्या आप मेरी मदद कर सकते हैं?",
+                english: "Can you help me?"
+            },
+
+            {
+                hindi: "मुझे समझ नहीं आया।",
+                english: "I did not understand."
+            },
+
+            {
+                hindi: "कृपया धीरे बोलिए।",
+                english: "Please speak slowly."
+            }
+
+        ]
+
+    }
+
+};
 
     /* ==========================================
        GET LESSON LIST
@@ -80,70 +118,129 @@
 
     function showLessonList() {
 
-        const container =
-            getLessonList();
+    const container =
+        getLessonList();
 
 
-        if (!container) {
+    if (!container) {
 
-            console.error(
-                "Learn error: lessonList not found."
-            );
+        console.error(
+            "Learn error: lessonList not found."
+        );
 
-            return;
+        return;
+
+    }
+
+
+    let lessonsHTML = "";
+
+
+    Object.keys(lessons).forEach(
+        function (lessonId) {
+
+            const lesson =
+                lessons[lessonId];
+
+
+            let completed = false;
+
+
+            if (
+                typeof EBStorage !== "undefined" &&
+                typeof EBStorage.isLessonCompleted ===
+                "function"
+            ) {
+
+                completed =
+                    EBStorage.isLessonCompleted(
+                        Number(lessonId)
+                    );
+
+            }
+
+
+            lessonsHTML += `
+
+                <div class="lessonCard">
+
+                    <span class="lessonNumber">
+                        Lesson ${lessonId}
+                    </span>
+
+                    <h3>
+                        ${lesson.title}
+                    </h3>
+
+                    <p>
+                        ${lesson.description}
+                    </p>
+
+                    <button
+                        class="primaryButton lessonButton"
+                        data-lesson="${lessonId}"
+                        ${
+                            completed
+                                ? "disabled"
+                                : ""
+                        }
+                    >
+                        ${
+                            completed
+                                ? "✅ Lesson Completed"
+                                : "Start Lesson"
+                        }
+                    </button>
+
+                </div>
+
+            `;
 
         }
+    );
 
 
-        container.innerHTML = `
-
-            <div class="lessonCard">
-
-                <span class="lessonNumber">
-                    Lesson 1
-                </span>
-
-                <h3>
-                    ${lessons[1].title}
-                </h3>
-
-                <p>
-                    ${lessons[1].description}
-                </p>
-
-                <button
-                    class="primaryButton lessonButton"
-                    data-lesson="1"
-                >
-                    Start Lesson
-                </button>
-
-            </div>
-
-        `;
+    container.innerHTML =
+        lessonsHTML;
 
 
-        const button =
-            container.querySelector(
-                ".lessonButton"
-            );
+    const buttons =
+        container.querySelectorAll(
+            ".lessonButton"
+        );
 
 
-        if (button) {
+    buttons.forEach(
+        function (button) {
+
+            if (button.disabled) {
+
+                return;
+
+            }
+
 
             button.addEventListener(
                 "click",
                 function () {
 
-                    openLesson(1);
+                    const lessonId =
+                        Number(
+                            button.dataset.lesson
+                        );
+
+
+                    openLesson(
+                        lessonId
+                    );
 
                 }
             );
 
         }
+    );
 
-    }
-
+}
 
     /* ==========================================
        OPEN LESSON
