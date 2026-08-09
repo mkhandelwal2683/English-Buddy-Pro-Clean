@@ -24,11 +24,16 @@
 
             id: 1,
 
-            title: "Daily English Basics",
+title: "Daily English Basics",
 
-            description:
-                "Learn simple English sentences for everyday conversations.",
+description:
+    "Learn simple English sentences for everyday conversations.",
 
+category: "Basics",
+
+level: "Beginner",
+
+xp: 20,
             examples: [
 
                 {
@@ -65,11 +70,16 @@
 
             id: 2,
 
-            title: "Everyday Conversations",
+title: "Everyday Conversations",
 
-            description:
-                "Learn useful English sentences for daily situations.",
+description:
+    "Learn useful English sentences for daily situations.",
 
+category: "Conversation",
+
+level: "Beginner",
+
+xp: 20,
             examples: [
 
                 {
