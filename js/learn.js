@@ -317,7 +317,85 @@ function showLearnLanding() {
 
             }
         );
+/* --------------------------------------
+   Build practice activity
+-------------------------------------- */
 
+let practiceHTML = "";
+
+
+if (
+    Array.isArray(lesson.examples) &&
+    lesson.examples.length > 0
+) {
+
+    practiceHTML = `
+
+        <div
+            class="practiceSection"
+            id="practiceSection"
+        >
+
+            <h3>
+                🎯 Practice English
+            </h3>
+
+            <p>
+                Read the Hindi sentence and try to say
+                the English sentence before revealing
+                the answer.
+            </p>
+
+            <div
+                class="practiceCard"
+                id="practiceCard"
+            >
+
+                <div
+                    class="practiceLabel"
+                >
+                    Practice 1 of ${lesson.examples.length}
+                </div>
+
+                <div
+                    class="hindiText"
+                    id="practiceHindi"
+                >
+                    ${lesson.examples[0].hindi}
+                </div>
+
+                <div
+                    class="englishText"
+                    id="practiceEnglish"
+                    style="display:none;"
+                >
+                    ${lesson.examples[0].english}
+                </div>
+
+            </div>
+
+
+            <button
+                id="showPracticeAnswer"
+                class="secondaryButton"
+            >
+                👀 Show Answer
+            </button>
+
+
+            <button
+                id="nextPractice"
+                class="primaryButton"
+                style="display:none;"
+            >
+                Next Practice →
+            </button>
+
+        </div>
+
+    `;
+
+}
 
         /* --------------------------------------
            Completion button
@@ -399,7 +477,8 @@ function showLearnLanding() {
 
                 </div>
 
-
+                   ${practiceHTML}
+                   
                 ${completionMessage}
 
 
