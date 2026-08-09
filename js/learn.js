@@ -716,7 +716,7 @@ EBStorage.saveProgress(
         }
 
 
-        showLessonList();
+        showLearnLanding();
 
 
         console.log(
@@ -732,16 +732,19 @@ EBStorage.saveProgress(
 
     window.EBLearn = {
 
-        initialize:
-            initializeLearn,
+    initialize:
+        initializeLearn,
 
-        openLesson:
-            openLesson,
+    showLearnLanding:
+        showLearnLanding,
 
-        showLessonList:
-            showLessonList
+    openLesson:
+        openLesson,
 
-    };
+    showLessonList:
+        showLessonList
+
+};
 
 
 })();
