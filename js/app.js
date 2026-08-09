@@ -269,10 +269,57 @@ function updateHomeProgress() {
     "DOMContentLoaded",
     function () {
 
-        initializeNavigation();
-        updateHomeXP();
-       updateHomeProgress();
+initializeNavigation();
 
+updateHomeXP();
+
+updateHomeLevel();
+
+updateHomeProgress();
+       
+/* ==========================================
+   HOME LEVEL DISPLAY
+========================================== */
+
+function updateHomeLevel() {
+
+    const levelElement =
+        document.getElementById("homeLevel");
+
+
+    if (!levelElement) {
+
+        console.warn(
+            "Home Level element not found."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        typeof EBStorage === "undefined" ||
+        typeof EBStorage.syncLevel !== "function"
+    ) {
+
+        console.warn(
+            "Storage Level service unavailable."
+        );
+
+        return;
+
+    }
+
+
+    const currentLevel =
+        EBStorage.syncLevel();
+
+
+    levelElement.textContent =
+        currentLevel;
+
+}
         /* --------------------------------------
            Initialize Learn Module
         -------------------------------------- */
