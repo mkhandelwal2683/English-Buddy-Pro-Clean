@@ -177,20 +177,16 @@
                     </p>
 
                     <button
-                        class="primaryButton lessonButton"
-                        data-lesson="${lessonId}"
-                        ${
-                            completed
-                                ? "disabled"
-                                : ""
-                        }
-                    >
-                        ${
-                            completed
-                                ? "✅ Lesson Completed"
-                                : "Start Lesson"
-                        }
-                    </button>
+                    <button
+    class="primaryButton lessonButton"
+    data-lesson="${lessonId}"
+>
+    ${
+        completed
+            ? "📖 Review Lesson"
+            : "Start Lesson"
+    }
+</button>
 
                 </div>
 
@@ -211,34 +207,26 @@
 
 
     buttons.forEach(
-        function (button) {
+    function (button) {
 
-            if (button.disabled) {
+        button.addEventListener(
+            "click",
+            function () {
 
-                return;
-
-            }
-
-
-            button.addEventListener(
-                "click",
-                function () {
-
-                    const lessonId =
-                        Number(
-                            button.dataset.lesson
-                        );
-
-
-                    openLesson(
-                        lessonId
+                const lessonId =
+                    Number(
+                        button.dataset.lesson
                     );
 
-                }
-            );
+                openLesson(
+                    lessonId
+                );
 
-        }
-    );
+            }
+        );
+
+    }
+);
 
 }
 
