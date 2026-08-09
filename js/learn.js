@@ -323,11 +323,11 @@ function showLearnLanding() {
 
 let practiceHTML = "";
 
-
 if (
-    Array.isArray(lesson.examples) &&
-    lesson.examples.length > 0
-) {
+    Array.isArray(lesson.practice) &&
+    lesson.practice.length > 0
+)
+ {
 
     practiceHTML = `
 
@@ -354,14 +354,14 @@ if (
                 <div
                     class="practiceLabel"
                 >
-                    Practice 1 of ${lesson.examples.length}
+                    Practice 1 of ${lesson.practice.length}
                 </div>
 
                 <div
                     class="hindiText"
                     id="practiceHindi"
                 >
-                    ${lesson.examples[0].hindi}
+                    ${lesson.practice[0].hindi}
                 </div>
 
                 <div
@@ -369,7 +369,7 @@ if (
                     id="practiceEnglish"
                     style="display:none;"
                 >
-                    ${lesson.examples[0].english}
+                    ${lesson.practice[0].english}
                 </div>
 
             </div>
@@ -757,7 +757,7 @@ if (
 
             if (
                 currentPracticeIndex >=
-                lesson.examples.length
+                lesson.practice.length
             ) {
 
                 currentPracticeIndex = 0;
@@ -766,8 +766,9 @@ if (
 
 
             const practiceItem =
-                lesson.examples[
-                    currentPracticeIndex
+                lesson.practice[
+    currentPracticeIndex
+]
                 ];
 
 
@@ -789,7 +790,7 @@ if (
 
             if (
                 currentPracticeIndex ===
-                lesson.examples.length - 1
+                lesson.practice.length - 1
             ) {
 
                 nextPracticeButton.textContent =
@@ -819,7 +820,7 @@ if (
                     "Practice " +
                     (currentPracticeIndex + 1) +
                     " of " +
-                    lesson.examples.length;
+                    lesson.practice.length;
 
             }
 
