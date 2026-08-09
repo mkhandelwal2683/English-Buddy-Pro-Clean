@@ -513,7 +513,7 @@ if (
 
 }
                    
-                   /* ------------------------------
+   /* ------------------------------
    Update lesson progress
 ------------------------------ */
 
@@ -521,14 +521,29 @@ const totalLessons =
     Object.keys(lessons).length;
 
 
-const completedLessons =
-    EBStorage.getCompletedLessons().length;
+const completedLessonIds =
+    EBStorage.getCompletedLessons();
+
+
+const validCompletedLessons =
+    [...new Set(completedLessonIds)]
+        .filter(function (lessonId) {
+
+            return lessons[lessonId] !== undefined;
+
+        });
 
 
 const progress =
-    Math.round(
-        (completedLessons / totalLessons) * 100
-    );
+    totalLessons > 0
+        ? Math.min(
+            100,
+            Math.round(
+                (validCompletedLessons.length /
+                totalLessons) * 100
+            )
+        )
+        : 0;
 
 
 EBStorage.saveProgress(
