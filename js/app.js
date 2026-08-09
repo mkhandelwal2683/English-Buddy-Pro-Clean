@@ -276,6 +276,8 @@ updateHomeXP();
 updateHomeLevel();
 
 updateHomeProgress();
+
+updateHomeStreak();
        
 /* ==========================================
    HOME LEVEL DISPLAY
@@ -320,6 +322,50 @@ function updateHomeLevel() {
         currentLevel;
 
 }
+       /* ==========================================
+   HOME STREAK DISPLAY
+========================================== */
+
+function updateHomeStreak() {
+
+    const streakElement =
+        document.getElementById("homeStreak");
+
+
+    if (!streakElement) {
+
+        console.warn(
+            "Home Streak element not found."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        typeof EBStorage === "undefined" ||
+        typeof EBStorage.getStreak !== "function"
+    ) {
+
+        console.warn(
+            "Storage Streak service unavailable."
+        );
+
+        return;
+
+    }
+
+
+    const currentStreak =
+        EBStorage.getStreak();
+
+
+    streakElement.textContent =
+        currentStreak;
+
+}
+       
         /* --------------------------------------
            Initialize Learn Module
         -------------------------------------- */
