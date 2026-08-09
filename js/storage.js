@@ -207,21 +207,57 @@ function addXP(amount) {
 
 
     /* ==========================================
-       LEVEL
-    =========================================== */
+   LEVEL
+========================================== */
 
-    function getLevel() {
+function getLevel() {
 
-        return load(KEYS.LEVEL, 1);
+    return load(KEYS.LEVEL, 1);
+
+}
+
+
+function saveLevel(level) {
+
+    return save(KEYS.LEVEL, level);
+
+}
+
+
+function calculateLevel(xp) {
+
+    if (
+        typeof xp !== "number" ||
+        !Number.isFinite(xp) ||
+        xp < 0
+    ) {
+
+        return 1;
 
     }
 
 
-    function saveLevel(level) {
+    return Math.floor(xp / 100) + 1;
 
-        return save(KEYS.LEVEL, level);
+}
 
-    }
+
+function syncLevel() {
+
+    const currentXP =
+        getXP();
+
+
+    const currentLevel =
+        calculateLevel(currentXP);
+
+
+    saveLevel(currentLevel);
+
+
+    return currentLevel;
+
+}
 
 
     /* ==========================================
@@ -341,6 +377,10 @@ function addXP(amount) {
 
         saveLevel: saveLevel,
 
+        calculateLevel: calculateLevel,
+
+        syncLevel: syncLevel,
+       
         getStreak: getStreak,
 
         saveStreak: saveStreak,
