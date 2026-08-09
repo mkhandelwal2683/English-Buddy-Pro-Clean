@@ -393,6 +393,18 @@ if (
 
 }
                    /* ------------------------------
+   Sync level
+------------------------------ */
+
+if (
+    typeof EBStorage.syncLevel === "function"
+) {
+
+    EBStorage.syncLevel();
+
+}
+                   
+                   /* ------------------------------
    Update lesson progress
 ------------------------------ */
 
