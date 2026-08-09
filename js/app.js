@@ -222,26 +222,37 @@ function updateHomeProgress() {
        Current total lessons
     -------------------------------------- */
 
-    const totalLessons = 1;
+    const totalLessons = 2;
 
 
     /* --------------------------------------
        Completed lessons
     -------------------------------------- */
 
-    const completedLessons =
-        EBStorage.getCompletedLessons();
+const completedLessonIds =
+    EBStorage.getCompletedLessons();
 
 
-    /* --------------------------------------
-       Calculate progress
-    -------------------------------------- */
+const validCompletedLessons =
+    [...new Set(completedLessonIds)]
+        .filter(function (lessonId) {
 
-    const currentProgress =
-        Math.round(
-            (completedLessons.length /
-            totalLessons) * 100
-        );
+            return Number(lessonId) >= 1 &&
+                Number(lessonId) <= totalLessons;
+
+        });
+
+
+const currentProgress =
+    totalLessons > 0
+        ? Math.min(
+            100,
+            Math.round(
+                (validCompletedLessons.length /
+                totalLessons) * 100
+            )
+        )
+        : 0;
 
 
     /* --------------------------------------
