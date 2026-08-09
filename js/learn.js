@@ -676,7 +676,158 @@ EBStorage.saveProgress(
 
         }
 
+/* ======================================
+   PRACTICE ACTIVITY
+====================================== */
 
+let currentPracticeIndex = 0;
+
+
+const showAnswerButton =
+    document.getElementById(
+        "showPracticeAnswer"
+    );
+
+
+const nextPracticeButton =
+    document.getElementById(
+        "nextPractice"
+    );
+
+
+const practiceHindi =
+    document.getElementById(
+        "practiceHindi"
+    );
+
+
+const practiceEnglish =
+    document.getElementById(
+        "practiceEnglish"
+    );
+
+
+const practiceCard =
+    document.getElementById(
+        "practiceCard"
+    );
+
+
+if (
+    showAnswerButton &&
+    nextPracticeButton &&
+    practiceHindi &&
+    practiceEnglish &&
+    practiceCard
+) {
+
+    /* ----------------------------------
+       SHOW ANSWER
+    ---------------------------------- */
+
+    showAnswerButton.addEventListener(
+        "click",
+        function () {
+
+            practiceEnglish.style.display =
+                "block";
+
+
+            showAnswerButton.style.display =
+                "none";
+
+
+            nextPracticeButton.style.display =
+                "inline-block";
+
+        }
+    );
+
+
+    /* ----------------------------------
+       NEXT PRACTICE
+    ---------------------------------- */
+
+    nextPracticeButton.addEventListener(
+        "click",
+        function () {
+
+            currentPracticeIndex++;
+
+
+            if (
+                currentPracticeIndex >=
+                lesson.examples.length
+            ) {
+
+                currentPracticeIndex = 0;
+
+            }
+
+
+            const practiceItem =
+                lesson.examples[
+                    currentPracticeIndex
+                ];
+
+
+            practiceHindi.textContent =
+                practiceItem.hindi;
+
+
+            practiceEnglish.textContent =
+                practiceItem.english;
+
+
+            practiceEnglish.style.display =
+                "none";
+
+
+            showAnswerButton.style.display =
+                "inline-block";
+
+
+            if (
+                currentPracticeIndex ===
+                lesson.examples.length - 1
+            ) {
+
+                nextPracticeButton.textContent =
+                    "🔄 Practice Again";
+
+            } else {
+
+                nextPracticeButton.textContent =
+                    "Next Practice →";
+
+            }
+
+
+            nextPracticeButton.style.display =
+                "none";
+
+
+            const practiceLabel =
+                practiceCard.querySelector(
+                    ".practiceLabel"
+                );
+
+
+            if (practiceLabel) {
+
+                practiceLabel.textContent =
+                    "Practice " +
+                    (currentPracticeIndex + 1) +
+                    " of " +
+                    lesson.examples.length;
+
+            }
+
+        }
+    );
+
+}
+       
         /* ======================================
            BACK TO LESSON LIST
         ====================================== */
