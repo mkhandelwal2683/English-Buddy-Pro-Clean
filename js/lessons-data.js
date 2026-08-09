@@ -197,6 +197,35 @@ xp: 20,
                     hindi: "मेरा परिवार बहुत प्यारा है।",
                     english: "My family is very lovely."
                 }
+               
+               ],
+
+            practice: [
+
+                {
+                    hindi: "मेरे परिवार में चार लोग हैं।",
+                    english: "There are four people in my family."
+                },
+
+                {
+                    hindi: "मेरे पिता बहुत मेहनती हैं।",
+                    english: "My father is very hardworking."
+                },
+
+                {
+                    hindi: "मेरी माँ स्वादिष्ट खाना बनाती हैं।",
+                    english: "My mother cooks delicious food."
+                },
+
+                {
+                    hindi: "मैं अपने परिवार से प्यार करता हूँ।",
+                    english: "I love my family."
+                },
+
+                {
+                    hindi: "हम साथ में समय बिताते हैं।",
+                    english: "We spend time together."
+                }
 
             ]
 
