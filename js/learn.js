@@ -477,6 +477,16 @@ if (
 
 let earnedXP = 0;
 
+
+const lessonXP =
+    typeof lesson.xp === "number" &&
+    lesson.xp > 0
+
+        ? lesson.xp
+
+        : 20;
+
+
 if (
     typeof EBStorage.addXP === "function"
 ) {
@@ -484,14 +494,19 @@ if (
     const previousXP =
         EBStorage.getXP();
 
+
     const newXP =
-        EBStorage.addXP(20);
+        EBStorage.addXP(
+            lessonXP
+        );
+
 
     earnedXP =
         newXP - previousXP;
 
 }
-                   /* ------------------------------
+                                   
+/* ------------------------------
    Sync level
 ------------------------------ */
 
