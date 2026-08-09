@@ -203,7 +203,10 @@ function updateHomeProgress() {
 
     if (
         typeof EBStorage === "undefined" ||
-        typeof EBStorage.getProgress !== "function"
+        typeof EBStorage.getCompletedLessons !==
+        "function" ||
+        typeof EBStorage.saveProgress !==
+        "function"
     ) {
 
         console.warn(
@@ -215,15 +218,49 @@ function updateHomeProgress() {
     }
 
 
-    const currentProgress =
-        EBStorage.getProgress();
+    /* --------------------------------------
+       Current total lessons
+    -------------------------------------- */
 
+    const totalLessons = 1;
+
+
+    /* --------------------------------------
+       Completed lessons
+    -------------------------------------- */
+
+    const completedLessons =
+        EBStorage.getCompletedLessons();
+
+
+    /* --------------------------------------
+       Calculate progress
+    -------------------------------------- */
+
+    const currentProgress =
+        Math.round(
+            (completedLessons.length /
+            totalLessons) * 100
+        );
+
+
+    /* --------------------------------------
+       Save synchronized progress
+    -------------------------------------- */
+
+    EBStorage.saveProgress(
+        currentProgress
+    );
+
+
+    /* --------------------------------------
+       Update Home UI
+    -------------------------------------- */
 
     progressElement.textContent =
         currentProgress + "%";
 
-}
-   
+}   
     /* ==========================================
        APP START
     =========================================== */
