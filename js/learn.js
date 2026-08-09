@@ -768,7 +768,6 @@ if (
             const practiceItem =
                 lesson.practice[
     currentPracticeIndex
-]
                 ];
 
 
