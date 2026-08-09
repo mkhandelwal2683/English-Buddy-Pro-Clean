@@ -155,6 +155,51 @@ xp: 20,
 
             ]
 
+               },
+               4: {
+
+            id: 4,
+
+            title: "Talking About Your Family",
+
+            description:
+                "Learn useful English sentences to talk about your family.",
+
+            category: "Conversation",
+
+            level: "Beginner",
+
+            xp: 30,
+
+            examples: [
+
+                {
+                    hindi: "मेरा एक भाई है।",
+                    english: "I have a brother."
+                },
+
+                {
+                    hindi: "मेरी एक बहन है।",
+                    english: "I have a sister."
+                },
+
+                {
+                    hindi: "मेरे पिता काम करते हैं।",
+                    english: "My father works."
+                },
+
+                {
+                    hindi: "मेरी माँ घर पर हैं।",
+                    english: "My mother is at home."
+                },
+
+                {
+                    hindi: "मेरा परिवार बहुत प्यारा है।",
+                    english: "My family is very lovely."
+                }
+
+            ]
+
                }
 
     };
