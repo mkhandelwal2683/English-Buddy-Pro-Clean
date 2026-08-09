@@ -111,7 +111,82 @@
 
     }
 
+/* ==========================================
+   SHOW LEARN LANDING
+========================================== */
 
+function showLearnLanding() {
+
+    const container =
+        getLessonList();
+
+
+    if (!container) {
+
+        console.error(
+            "Learn error: lessonList not found."
+        );
+
+        return;
+
+    }
+
+
+    container.innerHTML = `
+
+        <div class="sectionCard">
+
+            <h2>
+                Start Your English Journey
+            </h2>
+
+            <p>
+                Learn useful English sentences
+                step by step.
+            </p>
+
+            <button
+                id="openLessonLibrary"
+                class="primaryButton"
+            >
+                📚 Start Learning
+            </button>
+
+        </div>
+
+    `;
+
+
+    const startButton =
+        document.getElementById(
+            "openLessonLibrary"
+        );
+
+
+    if (startButton) {
+
+        startButton.addEventListener(
+            "click",
+            function () {
+
+                showLessonList();
+
+            }
+        );
+
+    }
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+}
+   
     /* ==========================================
        SHOW LESSON LIST
     ========================================== */
