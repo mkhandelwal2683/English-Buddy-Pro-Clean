@@ -371,7 +371,19 @@
                     EBStorage.markLessonCompleted(
                         lessonId
                     );
+/* ------------------------------
+   Update daily streak
+------------------------------ */
 
+if (
+    typeof EBStorage.updateDailyStreak ===
+    "function"
+) {
+
+    EBStorage.updateDailyStreak();
+
+}
+                   
 /* ------------------------------
    Award XP
 ------------------------------ */
