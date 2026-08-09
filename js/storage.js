@@ -25,6 +25,8 @@
 
         STREAK: "ebp_streak",
 
+      LAST_ACTIVITY_DATE: "ebp_last_activity_date",
+       
         PROGRESS: "ebp_progress",
 
         COMPLETED_LESSONS: "ebp_completed_lessons"
@@ -261,21 +263,180 @@ function syncLevel() {
 
 
     /* ==========================================
-       STREAK
-    =========================================== */
+   STREAK
+========================================== */
 
-    function getStreak() {
+function getStreak() {
 
-        return load(KEYS.STREAK, 0);
+    return load(KEYS.STREAK, 0);
+
+}
+
+
+function saveStreak(streak) {
+
+    return save(KEYS.STREAK, streak);
+
+}
+
+
+function getLastActivityDate() {
+
+    return load(
+        KEYS.LAST_ACTIVITY_DATE,
+        null
+    );
+
+}
+
+
+function saveLastActivityDate(date) {
+
+    return save(
+        KEYS.LAST_ACTIVITY_DATE,
+        date
+    );
+
+}
+
+
+function getTodayDate() {
+
+    const today =
+        new Date();
+
+
+    const year =
+        today.getFullYear();
+
+
+    const month =
+        String(
+            today.getMonth() + 1
+        ).padStart(2, "0");
+
+
+    const day =
+        String(
+            today.getDate()
+        ).padStart(2, "0");
+
+
+    return (
+        year +
+        "-" +
+        month +
+        "-" +
+        day
+    );
+
+}
+
+
+function updateDailyStreak() {
+
+    const today =
+        getTodayDate();
+
+
+    const lastActivityDate =
+        getLastActivityDate();
+
+
+    let currentStreak =
+        getStreak();
+
+
+    /* --------------------------------------
+       First activity
+    -------------------------------------- */
+
+    if (!lastActivityDate) {
+
+        currentStreak = 1;
+
+    }
+
+    /* --------------------------------------
+       Activity on same day
+    -------------------------------------- */
+
+    else if (
+        lastActivityDate === today
+    ) {
+
+        return currentStreak;
+
+    }
+
+    /* --------------------------------------
+       Compare with yesterday
+    -------------------------------------- */
+
+    else {
+
+        const yesterday =
+            new Date();
+
+
+        yesterday.setDate(
+            yesterday.getDate() - 1
+        );
+
+
+        const yesterdayYear =
+            yesterday.getFullYear();
+
+
+        const yesterdayMonth =
+            String(
+                yesterday.getMonth() + 1
+            ).padStart(2, "0");
+
+
+        const yesterdayDay =
+            String(
+                yesterday.getDate()
+            ).padStart(2, "0");
+
+
+        const yesterdayDate =
+            yesterdayYear +
+            "-" +
+            yesterdayMonth +
+            "-" +
+            yesterdayDay;
+
+
+        if (
+            lastActivityDate ===
+            yesterdayDate
+        ) {
+
+            currentStreak += 1;
+
+        } else {
+
+            currentStreak = 1;
+
+        }
 
     }
 
 
-    function saveStreak(streak) {
+    saveStreak(
+        currentStreak
+    );
 
-        return save(KEYS.STREAK, streak);
 
-    }
+    saveLastActivityDate(
+        today
+    );
+
+
+    return currentStreak;
+
+}
 
 
     /* ==========================================
@@ -383,7 +544,15 @@ function syncLevel() {
        
         getStreak: getStreak,
 
-        saveStreak: saveStreak,
+saveStreak: saveStreak,
+
+getLastActivityDate: getLastActivityDate,
+
+saveLastActivityDate: saveLastActivityDate,
+
+getTodayDate: getTodayDate,
+
+updateDailyStreak: updateDailyStreak,
 
         getProgress: getProgress,
 
