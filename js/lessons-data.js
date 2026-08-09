@@ -109,7 +109,53 @@ xp: 20,
 
             ]
 
-        }
+        },
+
+               3: {
+
+            id: 3,
+
+            title: "Introducing Yourself",
+
+            description:
+                "Learn simple English sentences to introduce yourself.",
+
+            category: "Conversation",
+
+            level: "Beginner",
+
+            xp: 20,
+
+            examples: [
+
+                {
+                    hindi: "मेरा नाम अमित है।",
+                    english: "My name is Amit."
+                },
+
+                {
+                    hindi: "मैं भारत से हूँ।",
+                    english: "I am from India."
+                },
+
+                {
+                    hindi: "मैं एक छात्र हूँ।",
+                    english: "I am a student."
+                },
+
+                {
+                    hindi: "मुझे अंग्रेज़ी सीखना पसंद है।",
+                    english: "I like learning English."
+                },
+
+                {
+                    hindi: "आपसे मिलकर खुशी हुई।",
+                    english: "Nice to meet you."
+                }
+
+            ]
+
+               }
 
     };
 
