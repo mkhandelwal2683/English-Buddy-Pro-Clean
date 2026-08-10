@@ -417,7 +417,6 @@ function getAllLessons() {
         normalizeLesson
 
 };
-addTestGeneratedLesson();
 
     console.log(
         "English Buddy Pro: Lesson Engine initialized."
