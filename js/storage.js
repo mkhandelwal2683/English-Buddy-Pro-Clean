@@ -14,27 +14,29 @@
 
 
     /* ==========================================
-       STORAGE KEYS
-    =========================================== */
+   STORAGE KEYS
+========================================== */
 
-    const KEYS = {
+const KEYS = {
 
-        XP: "ebp_xp",
+    XP: "ebp_xp",
 
-        LEVEL: "ebp_level",
+    LEVEL: "ebp_level",
 
-        STREAK: "ebp_streak",
+    STREAK: "ebp_streak",
 
-      LAST_ACTIVITY_DATE: "ebp_last_activity_date",
-       
-        PROGRESS: "ebp_progress",
+    LAST_ACTIVITY_DATE:
+        "ebp_last_activity_date",
 
-        COMPLETED_LESSONS: "ebp_completed_lessons"
+    PROGRESS: "ebp_progress",
 
-       GENERATED_LESSONS:
-    "ebp_generated_lessons"
-   
-    };
+    COMPLETED_LESSONS:
+        "ebp_completed_lessons",
+
+    GENERATED_LESSONS:
+        "ebp_generated_lessons"
+
+};
 
 
     /* ==========================================
