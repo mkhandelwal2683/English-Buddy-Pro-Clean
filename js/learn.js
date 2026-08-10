@@ -198,8 +198,28 @@ function showLearnLanding() {
     );
 
 
-    container.innerHTML =
-        lessonsHTML;
+    container.innerHTML = `
+
+    <div class="generateLessonCard">
+
+        <h3>🤖 More Practice</h3>
+
+        <p>
+            Generate a new English lesson for more practice.
+        </p>
+
+        <button
+            id="generateLessonButton"
+            class="primaryButton"
+        >
+            ✨ Generate New Lesson
+        </button>
+
+    </div>
+
+    ${lessonsHTML}
+
+`;
 
 
     const buttons =
