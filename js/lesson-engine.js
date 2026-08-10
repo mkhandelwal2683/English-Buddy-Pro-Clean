@@ -196,6 +196,123 @@ function getGeneratedLessons() {
 
 }
    
+   /* ==========================================
+   TEST PERSISTENT GENERATED LESSON
+========================================== */
+
+function addTestGeneratedLesson() {
+
+    if (
+        typeof EBStorage === "undefined" ||
+        typeof EBStorage.addGeneratedLesson !==
+        "function"
+    ) {
+
+        return;
+
+    }
+
+
+    const existingLesson =
+        EBStorage.getGeneratedLessons();
+
+
+    if (
+        existingLesson[6]
+    ) {
+
+        return;
+
+    }
+
+
+    EBStorage.addGeneratedLesson({
+
+        id: 6,
+
+        title:
+            "At the Restaurant",
+
+        description:
+            "Learn useful English sentences for ordering food.",
+
+        category:
+            "Daily Life",
+
+        level:
+            "Beginner",
+
+        xp:
+            20,
+
+        examples: [
+
+            {
+                hindi:
+                    "मुझे एक मेन्यू चाहिए।",
+
+                english:
+                    "I need a menu."
+            },
+
+            {
+                hindi:
+                    "मैं यह ऑर्डर करना चाहता हूँ।",
+
+                english:
+                    "I would like to order this."
+            },
+
+            {
+                hindi:
+                    "यह बहुत स्वादिष्ट है।",
+
+                english:
+                    "This is very delicious."
+            },
+
+            {
+                hindi:
+                    "मुझे बिल चाहिए।",
+
+                english:
+                    "I need the bill."
+            }
+
+        ],
+
+        practice: [
+
+            {
+                hindi:
+                    "क्या आप मुझे पानी दे सकते हैं?",
+
+                english:
+                    "Can you give me some water?"
+            },
+
+            {
+                hindi:
+                    "मुझे मसालेदार खाना पसंद नहीं है।",
+
+                english:
+                    "I do not like spicy food."
+            },
+
+            {
+                hindi:
+                    "खाना बहुत अच्छा था।",
+
+                english:
+                    "The food was very good."
+            }
+
+        ]
+
+    });
+
+}
+   
     /* ==========================================
    GET ALL LESSONS
 ========================================== */
@@ -300,7 +417,7 @@ function getAllLessons() {
         normalizeLesson
 
 };
-
+addTestGeneratedLesson();
 
     console.log(
         "English Buddy Pro: Lesson Engine initialized."
