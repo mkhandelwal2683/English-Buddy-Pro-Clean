@@ -330,42 +330,6 @@ function addTestLesson() {
 
             practice: [
 
-                {
-                    hindi:
-                        "कृपया मुझे रास्ता बताइए।",
-
-                    english:
-                        "Please tell me the way."
-                },
-
-                {
-                    hindi:
-                        "दाईं ओर मुड़िए।",
-
-                    english:
-                        "Turn right."
-                },
-
-                {
-                    hindi:
-                        "यह बहुत पास है।",
-
-                    english:
-                        "It is very near."
-                }
-
-            ]
-
-        }
-    );
-
-
-    console.log(
-        "Lesson Generator test result:",
-        result
-    );
-
-}
    
     /* ==========================================
        PUBLIC API
