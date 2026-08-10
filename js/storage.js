@@ -31,6 +31,9 @@
 
         COMPLETED_LESSONS: "ebp_completed_lessons"
 
+       GENERATED_LESSONS:
+    "ebp_generated_lessons"
+   
     };
 
 
@@ -511,7 +514,102 @@ function updateDailyStreak() {
 
     }
 
+/* ==========================================
+   GENERATED LESSONS
+========================================== */
 
+function getGeneratedLessons() {
+
+    return load(
+        KEYS.GENERATED_LESSONS,
+        {}
+    );
+
+}
+
+
+function saveGeneratedLessons(lessons) {
+
+    if (
+        !lessons ||
+        typeof lessons !== "object" ||
+        Array.isArray(lessons)
+    ) {
+
+        console.error(
+            "Generated lessons error: invalid lesson data."
+        );
+
+        return false;
+
+    }
+
+
+    return save(
+        KEYS.GENERATED_LESSONS,
+        lessons
+    );
+
+}
+
+
+function addGeneratedLesson(lesson) {
+
+    if (
+        !lesson ||
+        typeof lesson !== "object" ||
+        !lesson.id
+    ) {
+
+        console.error(
+            "Generated lesson error: invalid lesson."
+        );
+
+        return false;
+
+    }
+
+
+    const lessons =
+        getGeneratedLessons();
+
+
+    lessons[
+        lesson.id
+    ] = lesson;
+
+
+    return saveGeneratedLessons(
+        lessons
+    );
+
+}
+
+
+function removeGeneratedLesson(lessonId) {
+
+    const lessons =
+        getGeneratedLessons();
+
+
+    if (
+        lessons[lessonId] === undefined
+    ) {
+
+        return false;
+
+    }
+
+
+    delete lessons[lessonId];
+
+
+    return saveGeneratedLessons(
+        lessons
+    );
+
+}
+   
     /* ==========================================
        PUBLIC API
     =========================================== */
@@ -568,7 +666,19 @@ updateDailyStreak: updateDailyStreak,
             markLessonCompleted,
 
         isLessonCompleted:
-            isLessonCompleted
+    isLessonCompleted,
+
+getGeneratedLessons:
+    getGeneratedLessons,
+
+saveGeneratedLessons:
+    saveGeneratedLessons,
+
+addGeneratedLesson:
+    addGeneratedLesson,
+
+removeGeneratedLesson:
+    removeGeneratedLesson
 
     };
 
