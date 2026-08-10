@@ -17,7 +17,7 @@
    GENERATED LESSON SOURCE
 ========================================== */
 
-const generatedLessons = {
+const fallbackGeneratedLessons = {
 
     5: {
 
@@ -171,7 +171,28 @@ const generatedLessons = {
 
 function getGeneratedLessons() {
 
-    return generatedLessons;
+    let storedGeneratedLessons = {};
+
+
+    if (
+        typeof EBStorage !== "undefined" &&
+        typeof EBStorage.getGeneratedLessons ===
+        "function"
+    ) {
+
+        storedGeneratedLessons =
+            EBStorage.getGeneratedLessons();
+
+    }
+
+
+    return {
+
+        ...fallbackGeneratedLessons,
+
+        ...storedGeneratedLessons
+
+    };
 
 }
    
