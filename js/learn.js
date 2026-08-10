@@ -19,10 +19,10 @@
 ========================================== */
 
 const lessons =
-    typeof EBLessons !== "undefined" &&
-    typeof EBLessons.getAll === "function"
+    typeof EBLessonEngine !== "undefined" &&
+    typeof EBLessonEngine.getAll === "function"
 
-        ? EBLessons.getAll()
+        ? EBLessonEngine.getAll()
 
         : {};
 
