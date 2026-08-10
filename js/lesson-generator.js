@@ -384,7 +384,6 @@ function addTestLesson() {
 
     };
 
-addTestLesson();
    
     console.log(
 
