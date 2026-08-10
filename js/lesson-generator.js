@@ -241,7 +241,132 @@
 
     }
 
+/* ==========================================
+   TEST GENERATED LESSON
+========================================== */
 
+function addTestLesson() {
+
+    const existingLessons =
+        typeof EBStorage !== "undefined" &&
+        typeof EBStorage.getGeneratedLessons ===
+        "function"
+
+            ? EBStorage.getGeneratedLessons()
+
+            : {};
+
+
+    if (
+        existingLessons[7]
+    ) {
+
+        return;
+
+    }
+
+
+    const result =
+        createLesson({
+
+            title:
+                "Travel and Directions",
+
+            description:
+                "Learn useful English sentences for asking and giving directions.",
+
+            category:
+                "Travel",
+
+            level:
+                "Beginner",
+
+            xp:
+                20,
+
+            examples: [
+
+                {
+                    hindi:
+                        "बस स्टॉप कहाँ है?",
+
+                    english:
+                        "Where is the bus stop?"
+                },
+
+                {
+                    hindi:
+                        "मुझे रेलवे स्टेशन जाना है।",
+
+                    english:
+                        "I need to go to the railway station."
+                },
+
+                {
+                    hindi:
+                        "सीधे जाइए।",
+
+                    english:
+                        "Go straight."
+                },
+
+                {
+                    hindi:
+                        "बाएं मुड़िए।",
+
+                    english:
+                        "Turn left."
+                },
+
+                {
+                    hindi:
+                        "क्या यह यहाँ से दूर है?",
+
+                    english:
+                        "Is it far from here?"
+                }
+
+            ],
+
+            practice: [
+
+                {
+                    hindi:
+                        "कृपया मुझे रास्ता बताइए।",
+
+                    english:
+                        "Please tell me the way."
+                },
+
+                {
+                    hindi:
+                        "दाईं ओर मुड़िए।",
+
+                    english:
+                        "Turn right."
+                },
+
+                {
+                    hindi:
+                        "यह बहुत पास है।",
+
+                    english:
+                        "It is very near."
+                }
+
+            ]
+
+        }
+    );
+
+
+    console.log(
+        "Lesson Generator test result:",
+        result
+    );
+
+}
+   
     /* ==========================================
        PUBLIC API
     ========================================== */
@@ -259,8 +384,11 @@
 
     };
 
-
+addTestLesson();
+   
     console.log(
+
+       
         "English Buddy Pro: Lesson Generator initialized."
     );
 
