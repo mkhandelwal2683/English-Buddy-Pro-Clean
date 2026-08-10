@@ -13,7 +13,12 @@
 (function () {
 
     "use strict";
+/* ==========================================
+   GENERATED LESSON SOURCE
+========================================== */
 
+const generatedLessons = {};
+   
 
     /* ==========================================
        NORMALIZE LESSON
@@ -90,48 +95,69 @@
 
     }
 
+/* ==========================================
+   LOAD GENERATED LESSONS
+========================================== */
 
+function getGeneratedLessons() {
+
+    return generatedLessons;
+
+}
+   
     /* ==========================================
-       GET ALL LESSONS
-    ========================================== */
+   GET ALL LESSONS
+========================================== */
 
-    function getAllLessons() {
+function getAllLessons() {
 
-        const sourceLessons =
-            getBuiltInLessons();
-
-
-        const normalizedLessons = {};
+    const builtInLessons =
+        getBuiltInLessons();
 
 
-        Object.keys(sourceLessons).forEach(
-            function (lessonId) {
-
-                const lesson =
-                    normalizeLesson(
-                        sourceLessons[lessonId]
-                    );
+    const futureGeneratedLessons =
+        getGeneratedLessons();
 
 
-                if (
-                    lesson &&
-                    lesson.id > 0
-                ) {
+    const allSourceLessons = {
 
-                    normalizedLessons[
-                        lesson.id
-                    ] = lesson;
+        ...builtInLessons,
 
-                }
+        ...futureGeneratedLessons
+
+    };
+
+
+    const normalizedLessons = {};
+
+
+    Object.keys(allSourceLessons).forEach(
+        function (lessonId) {
+
+            const lesson =
+                normalizeLesson(
+                    allSourceLessons[lessonId]
+                );
+
+
+            if (
+                lesson &&
+                lesson.id > 0
+            ) {
+
+                normalizedLessons[
+                    lesson.id
+                ] = lesson;
 
             }
-        );
+
+        }
+    );
 
 
-        return normalizedLessons;
+    return normalizedLessons;
 
-    }
-
+}
 
     /* ==========================================
        GET SINGLE LESSON
@@ -167,19 +193,22 @@
 
     window.EBLessonEngine = {
 
-        getAll:
-            getAllLessons,
+    getAll:
+        getAllLessons,
 
-        get:
-            getLesson,
+    get:
+        getLesson,
 
-        getTotal:
-            getTotalLessons,
+    getTotal:
+        getTotalLessons,
 
-        normalize:
-            normalizeLesson
+    getGenerated:
+        getGeneratedLessons,
 
-    };
+    normalize:
+        normalizeLesson
+
+};
 
 
     console.log(
