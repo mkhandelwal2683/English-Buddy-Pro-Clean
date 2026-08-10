@@ -17,7 +17,77 @@
    GENERATED LESSON SOURCE
 ========================================== */
 
-const generatedLessons = {};
+const generatedLessons = {
+
+    5: {
+
+        id: 5,
+
+        title: "Shopping and Prices",
+
+        description:
+            "Learn useful English sentences for shopping.",
+
+        category:
+            "Daily Life",
+
+        level:
+            "Beginner",
+
+        xp:
+            20,
+
+        examples: [
+
+            {
+                hindi: "यह कितने का है?",
+                english: "How much does this cost?"
+            },
+
+            {
+                hindi: "क्या यह सस्ता है?",
+                english: "Is this cheaper?"
+            },
+
+            {
+                hindi: "मुझे यह चाहिए।",
+                english: "I would like this."
+            },
+
+            {
+                hindi: "क्या आपके पास दूसरा रंग है?",
+                english: "Do you have another color?"
+            },
+
+            {
+                hindi: "मैं कार्ड से भुगतान करूंगा।",
+                english: "I will pay by card."
+            }
+
+        ],
+
+        practice: [
+
+            {
+                hindi: "यह बहुत महंगा है।",
+                english: "This is very expensive."
+            },
+
+            {
+                hindi: "क्या आप मुझे छूट दे सकते हैं?",
+                english: "Can you give me a discount?"
+            },
+
+            {
+                hindi: "मुझे बिल चाहिए।",
+                english: "I need the bill."
+            }
+
+        ]
+
+    }
+
+};
    
 
     /* ==========================================
