@@ -210,12 +210,15 @@ const lessons =
 
     <div class="generateLessonCard">
 
-        <h3>🤖 More Practice</h3>
+    <h3>🤖 More Practice</h3>
 
-        <p>
-            Choose your level and topic,
-            then generate a fresh English lesson.
-        </p>
+    <p>
+        Choose your level and topic,
+        then generate a fresh English lesson.
+    </p>
+
+
+    <div class="lessonGeneratorField">
 
         <label for="lessonLevel">
             📊 Level
@@ -224,6 +227,89 @@ const lessons =
         <select
             id="lessonLevel"
             class="lessonSelector"
+        >
+
+            <option value="Beginner">
+                Beginner
+            </option>
+
+            <option value="Elementary">
+                Elementary
+            </option>
+
+            <option value="Intermediate">
+                Intermediate
+            </option>
+
+            <option value="Advanced">
+                Advanced
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="lessonGeneratorField">
+
+        <label for="lessonTopic">
+            📚 Topic
+        </label>
+
+        <select
+            id="lessonTopic"
+            class="lessonSelector"
+        >
+
+            <option value="Daily Life">
+                Daily Life
+            </option>
+
+            <option value="School & Education">
+                School & Education
+            </option>
+
+            <option value="Travel">
+                Travel
+            </option>
+
+            <option value="Shopping">
+                Shopping
+            </option>
+
+            <option value="Food & Restaurant">
+                Food & Restaurant
+            </option>
+
+            <option value="Work & Office">
+                Work & Office
+            </option>
+
+            <option value="Grammar">
+                Grammar
+            </option>
+
+            <option value="Vocabulary">
+                Vocabulary
+            </option>
+
+            <option value="Conversation">
+                Conversation
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <button
+        id="generateLessonButton"
+        class="primaryButton"
+    >
+        ✨ Generate New Lesson
+    </button>
+
+</div>
         >
 
             <option value="Beginner">
