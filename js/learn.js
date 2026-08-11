@@ -18,13 +18,20 @@
    LESSON DATA SOURCE
 ========================================== */
 
-const lessons =
-    typeof EBLessonEngine !== "undefined" &&
-    typeof EBLessonEngine.getAll === "function"
+function getLessons() {
 
-        ? EBLessonEngine.getAll()
+    if (
+        typeof EBLessonEngine !== "undefined" &&
+        typeof EBLessonEngine.getAll === "function"
+    ) {
 
-        : {};
+        return EBLessonEngine.getAll();
+
+    }
+
+    return {};
+
+}
 
     /* ==========================================
        GET LESSON LIST
@@ -119,7 +126,9 @@ function showLearnLanding() {
     ========================================== */
 
     function showLessonList() {
-
+const lessons =
+    getLessons();
+       
     const container =
         getLessonList();
 
@@ -179,7 +188,6 @@ function showLearnLanding() {
                     </p>
 
                     <button
-                    <button
     class="primaryButton lessonButton"
     data-lesson="${lessonId}"
 >
@@ -221,7 +229,155 @@ function showLearnLanding() {
 
 `;
 
+/* ======================================
+   AI LESSON GENERATOR
+====================================== */
 
+const generateLessonButton =
+    document.getElementById(
+        "generateLessonButton"
+    );
+
+
+if (generateLessonButton) {
+
+    generateLessonButton.addEventListener(
+        "click",
+        async function () {
+
+            /* ------------------------------
+               Prevent duplicate requests
+            ------------------------------ */
+
+            generateLessonButton.disabled =
+                true;
+
+
+            generateLessonButton.textContent =
+                "⏳ Generating Lesson...";
+
+
+            try {
+
+                /* --------------------------
+                   Generate AI Lesson
+                -------------------------- */
+
+                const result =
+                    await EBLessonGenerator.generateFromAI(
+                        "Beginner",
+                        "Daily Life"
+                    );
+
+
+                /* --------------------------
+                   Check result
+                -------------------------- */
+
+                if (
+                    !result ||
+                    result.success !== true
+                ) {
+
+                    console.error(
+                        "AI lesson generation failed:",
+                        result
+                    );
+
+
+                    alert(
+                        "Sorry, we could not generate a new lesson. Please try again."
+                    );
+
+
+                    return;
+
+                }
+
+
+                /* --------------------------
+                   Success
+                -------------------------- */
+
+                console.log(
+                    "AI lesson generated:",
+                    result.lesson
+                );
+
+
+                alert(
+                    "🎉 New lesson generated successfully!"
+                );
+
+
+                /* --------------------------
+                   Refresh lesson library
+                -------------------------- */
+
+                showLessonList();
+
+
+                /* --------------------------
+                   Scroll to top
+                -------------------------- */
+
+                window.scrollTo({
+
+                    top: 0,
+
+                    behavior: "smooth"
+
+                });
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Generate lesson error:",
+                    error
+                );
+
+
+                alert(
+                    "Something went wrong while generating the lesson."
+                );
+
+            }
+
+            finally {
+
+                /* --------------------------
+                   Restore button
+                -------------------------- */
+
+                if (
+                    document.getElementById(
+                        "generateLessonButton"
+                    )
+                ) {
+
+                    const button =
+                        document.getElementById(
+                            "generateLessonButton"
+                        );
+
+
+                    button.disabled =
+                        false;
+
+
+                    button.textContent =
+                        "✨ Generate New Lesson";
+
+                }
+
+            }
+
+        }
+    );
+
+}
     const buttons =
         container.querySelectorAll(
             ".lessonButton"
