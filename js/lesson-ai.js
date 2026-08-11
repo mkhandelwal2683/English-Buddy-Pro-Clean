@@ -5,8 +5,8 @@
    lesson-ai.js
 
    Responsibility:
-   - Provide AI lesson generation interface
-   - Communicate with backend AI service
+   - Connect Learn module to AI Worker
+   - Request AI-generated lessons
    - Return structured lesson data
 ========================================== */
 
@@ -16,55 +16,27 @@
 
 
     /* ==========================================
-       CONFIGURATION
+       AI WORKER CONFIGURATION
     ========================================== */
 
-    const CONFIG = {
-
-        WORKER_URL:
-            "",
-
-        REQUEST_TIMEOUT:
-            30000
-
-    };
+    const WORKER_URL =
+        "https://english-buddy-clean-lesson-ai.mkhandelwal2683.workers.dev/";
 
 
     /* ==========================================
        GENERATE LESSON
     ========================================== */
 
-    async function generateLesson(options = {}) {
-
-        if (!CONFIG.WORKER_URL) {
-
-            throw new Error(
-                "Lesson AI service is not configured yet."
-            );
-
-        }
-
-
-        const controller =
-            new AbortController();
-
-
-        const timeout =
-            setTimeout(
-                function () {
-
-                    controller.abort();
-
-                },
-                CONFIG.REQUEST_TIMEOUT
-            );
-
+    async function generateLesson(
+        level = "Beginner",
+        topic = "Daily Life"
+    ) {
 
         try {
 
             const response =
                 await fetch(
-                    CONFIG.WORKER_URL,
+                    WORKER_URL,
                     {
 
                         method: "POST",
@@ -79,60 +51,74 @@
                         body:
                             JSON.stringify({
 
-                                action:
-                                    "generate_lesson",
-
                                 level:
-                                    options.level ||
-                                    "Beginner",
+                                    level,
 
                                 topic:
-                                    options.topic ||
-                                    "Daily Life",
+                                    topic
 
-                                count:
-                                    1
-
-                            }),
-
-                        signal:
-                            controller.signal
+                            })
 
                     }
                 );
 
 
+            /* ======================================
+               CHECK HTTP RESPONSE
+            ====================================== */
+
             if (!response.ok) {
 
-                throw new Error(
-                    "AI service request failed: " +
+                console.error(
+                    "Lesson AI request failed:",
                     response.status
                 );
 
+                return null;
+
             }
 
+
+            /* ======================================
+               READ RESPONSE
+            ====================================== */
 
             const data =
                 await response.json();
 
 
+            /* ======================================
+               CHECK AI RESULT
+            ====================================== */
+
             if (
                 !data ||
+                data.success !== true ||
                 !data.lesson
             ) {
 
-                throw new Error(
-                    "AI service returned invalid lesson data."
+                console.error(
+                    "Lesson AI returned invalid data:",
+                    data
                 );
+
+                return null;
 
             }
 
 
             return data.lesson;
 
-        } finally {
+        }
 
-            clearTimeout(timeout);
+        catch (error) {
+
+            console.error(
+                "Lesson AI connection failed:",
+                error
+            );
+
+            return null;
 
         }
 
@@ -151,8 +137,12 @@
     };
 
 
+    /* ==========================================
+       INITIALIZATION
+    ========================================== */
+
     console.log(
-        "English Buddy Pro: Lesson AI service initialized."
+        "English Buddy Pro: Lesson AI initialized."
     );
 
 })();
