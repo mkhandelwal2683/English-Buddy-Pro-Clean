@@ -5,10 +5,10 @@
    lesson-generator.js
 
    Responsibility:
-   - Accept new lesson objects
    - Validate lesson structure
    - Normalize lesson data
-   - Save generated lessons
+   - Create/save generated lessons
+   - Request AI-generated lessons
 ========================================== */
 
 (function () {
@@ -183,7 +183,8 @@
 
         const lesson = {
 
-            id: lessonId,
+            id:
+                lessonId,
 
             title:
                 lessonData.title.trim(),
@@ -219,6 +220,10 @@
 
         if (!saved) {
 
+            console.error(
+                "Lesson Generator: failed to save lesson."
+            );
+
             return {
 
                 success: false,
@@ -235,102 +240,102 @@
 
             success: true,
 
-            lesson: lesson
+            lesson:
+                lesson
 
         };
 
     }
 
-/* ==========================================
-   TEST GENERATED LESSON
-========================================== */
 
-function addTestLesson() {
+    /* ==========================================
+       GENERATE LESSON USING AI
+    ========================================== */
 
-    const existingLessons =
-        typeof EBStorage !== "undefined" &&
-        typeof EBStorage.getGeneratedLessons ===
-        "function"
-
-            ? EBStorage.getGeneratedLessons()
-
-            : {};
-
-
-    if (
-        existingLessons[7]
+    async function generateFromAI(
+        level = "Beginner",
+        topic = "Daily Life"
     ) {
 
-        return;
+        if (
+            typeof EBLessonAI === "undefined" ||
+            typeof EBLessonAI.generate !==
+            "function"
+        ) {
+
+            console.error(
+                "Lesson Generator: AI service unavailable."
+            );
+
+            return {
+
+                success: false,
+
+                error:
+                    "AI service unavailable."
+
+            };
+
+        }
+
+
+        try {
+
+            const aiLesson =
+                await EBLessonAI.generate(
+                    level,
+                    topic
+                );
+
+
+            if (
+                !aiLesson
+            ) {
+
+                return {
+
+                    success: false,
+
+                    error:
+                        "AI did not return a lesson."
+
+                };
+
+            }
+
+
+            const result =
+                createLesson(
+                    aiLesson
+                );
+
+
+            return result;
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Lesson Generator: AI generation failed.",
+                error
+            );
+
+
+            return {
+
+                success: false,
+
+                error:
+                    "AI lesson generation failed."
+
+            };
+
+        }
 
     }
 
 
-    const result =
-        createLesson({
-
-            title:
-                "Travel and Directions",
-
-            description:
-                "Learn useful English sentences for asking and giving directions.",
-
-            category:
-                "Travel",
-
-            level:
-                "Beginner",
-
-            xp:
-                20,
-
-            examples: [
-
-                {
-                    hindi:
-                        "बस स्टॉप कहाँ है?",
-
-                    english:
-                        "Where is the bus stop?"
-                },
-
-                {
-                    hindi:
-                        "मुझे रेलवे स्टेशन जाना है।",
-
-                    english:
-                        "I need to go to the railway station."
-                },
-
-                {
-                    hindi:
-                        "सीधे जाइए।",
-
-                    english:
-                        "Go straight."
-                },
-
-                {
-                    hindi:
-                        "बाएं मुड़िए।",
-
-                    english:
-                        "Turn left."
-                },
-
-                {
-                    hindi:
-                        "क्या यह यहाँ से दूर है?",
-
-                    english:
-                        "Is it far from here?"
-                }
-
-            ],
-
-            practice: [
-
-   
     /* ==========================================
        PUBLIC API
     ========================================== */
@@ -344,14 +349,19 @@ function addTestLesson() {
             getNextLessonId,
 
         create:
-            createLesson
+            createLesson,
+
+        generateFromAI:
+            generateFromAI
 
     };
 
-   
-    console.log(
 
-       
+    /* ==========================================
+       INITIALIZATION
+    ========================================== */
+
+    console.log(
         "English Buddy Pro: Lesson Generator initialized."
     );
 
