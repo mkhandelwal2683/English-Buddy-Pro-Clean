@@ -222,7 +222,13 @@ function updateHomeProgress() {
        Current total lessons
     -------------------------------------- */
 
-    const totalLessons = 2;
+    const totalLessons =
+    typeof EBLessonEngine !== "undefined" &&
+    typeof EBLessonEngine.getTotal === "function"
+
+        ? EBLessonEngine.getTotal()
+
+        : 0;
 
 
     /* --------------------------------------
