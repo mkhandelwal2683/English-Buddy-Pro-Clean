@@ -206,191 +206,113 @@ const lessons =
     );
 
 
-    container.innerHTML = `
+        container.innerHTML = `
 
-    <div class="generateLessonCard">
+        <div class="generateLessonCard">
 
-    <h3>🤖 More Practice</h3>
+            <h3>🤖 More Practice</h3>
 
-    <p>
-        Choose your level and topic,
-        then generate a fresh English lesson.
-    </p>
+            <p>
+                Choose your level and topic,
+                then generate a fresh English lesson.
+            </p>
 
+            <div class="lessonGeneratorField">
 
-    <div class="lessonGeneratorField">
+                <label for="lessonLevel">
+                    📊 Level
+                </label>
 
-        <label for="lessonLevel">
-            📊 Level
-        </label>
+                <select
+                    id="lessonLevel"
+                    class="lessonSelector"
+                >
 
-        <select
-            id="lessonLevel"
-            class="lessonSelector"
-        >
+                    <option value="Beginner">
+                        Beginner
+                    </option>
 
-            <option value="Beginner">
-                Beginner
-            </option>
+                    <option value="Elementary">
+                        Elementary
+                    </option>
 
-            <option value="Elementary">
-                Elementary
-            </option>
+                    <option value="Intermediate">
+                        Intermediate
+                    </option>
 
-            <option value="Intermediate">
-                Intermediate
-            </option>
+                    <option value="Advanced">
+                        Advanced
+                    </option>
 
-            <option value="Advanced">
-                Advanced
-            </option>
+                </select>
 
-        </select>
-
-    </div>
-
-
-    <div class="lessonGeneratorField">
-
-        <label for="lessonTopic">
-            📚 Topic
-        </label>
-
-        <select
-            id="lessonTopic"
-            class="lessonSelector"
-        >
-
-            <option value="Daily Life">
-                Daily Life
-            </option>
-
-            <option value="School & Education">
-                School & Education
-            </option>
-
-            <option value="Travel">
-                Travel
-            </option>
-
-            <option value="Shopping">
-                Shopping
-            </option>
-
-            <option value="Food & Restaurant">
-                Food & Restaurant
-            </option>
-
-            <option value="Work & Office">
-                Work & Office
-            </option>
-
-            <option value="Grammar">
-                Grammar
-            </option>
-
-            <option value="Vocabulary">
-                Vocabulary
-            </option>
-
-            <option value="Conversation">
-                Conversation
-            </option>
-
-        </select>
-
-    </div>
+            </div>
 
 
-    <button
-        id="generateLessonButton"
-        class="primaryButton"
-    >
-        ✨ Generate New Lesson
-    </button>
+            <div class="lessonGeneratorField">
 
-</div>
-        >
+                <label for="lessonTopic">
+                    📚 Topic
+                </label>
 
-            <option value="Beginner">
-                Beginner
-            </option>
+                <select
+                    id="lessonTopic"
+                    class="lessonSelector"
+                >
 
-            <option value="Elementary">
-                Elementary
-            </option>
+                    <option value="Daily Life">
+                        Daily Life
+                    </option>
 
-            <option value="Intermediate">
-                Intermediate
-            </option>
+                    <option value="School & Education">
+                        School & Education
+                    </option>
 
-            <option value="Advanced">
-                Advanced
-            </option>
+                    <option value="Travel">
+                        Travel
+                    </option>
 
-        </select>
+                    <option value="Shopping">
+                        Shopping
+                    </option>
 
+                    <option value="Food & Restaurant">
+                        Food & Restaurant
+                    </option>
 
-        <label for="lessonTopic">
-            📚 Topic
-        </label>
+                    <option value="Work & Office">
+                        Work & Office
+                    </option>
 
-        <select
-            id="lessonTopic"
-            class="lessonSelector"
-        >
+                    <option value="Grammar">
+                        Grammar
+                    </option>
 
-            <option value="Daily Life">
-                Daily Life
-            </option>
+                    <option value="Vocabulary">
+                        Vocabulary
+                    </option>
 
-            <option value="School & Education">
-                School & Education
-            </option>
+                    <option value="Conversation">
+                        Conversation
+                    </option>
 
-            <option value="Travel">
-                Travel
-            </option>
+                </select>
 
-            <option value="Shopping">
-                Shopping
-            </option>
-
-            <option value="Food & Restaurant">
-                Food & Restaurant
-            </option>
-
-            <option value="Work & Office">
-                Work & Office
-            </option>
-
-            <option value="Grammar">
-                Grammar
-            </option>
-
-            <option value="Vocabulary">
-                Vocabulary
-            </option>
-
-            <option value="Conversation">
-                Conversation
-            </option>
-
-        </select>
+            </div>
 
 
-        <button
-            id="generateLessonButton"
-            class="primaryButton"
-        >
-            ✨ Generate New Lesson
-        </button>
+            <button
+                id="generateLessonButton"
+                class="primaryButton"
+            >
+                ✨ Generate New Lesson
+            </button>
 
-    </div>
+        </div>
 
-    ${lessonsHTML}
+        ${lessonsHTML}
 
-`;
+    `;
 
 /* ======================================
    AI LESSON GENERATOR
