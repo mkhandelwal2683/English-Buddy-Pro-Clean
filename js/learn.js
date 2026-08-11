@@ -213,8 +213,85 @@ const lessons =
         <h3>🤖 More Practice</h3>
 
         <p>
-            Generate a new English lesson for more practice.
+            Choose your level and topic,
+            then generate a fresh English lesson.
         </p>
+
+        <label for="lessonLevel">
+            📊 Level
+        </label>
+
+        <select
+            id="lessonLevel"
+            class="lessonSelector"
+        >
+
+            <option value="Beginner">
+                Beginner
+            </option>
+
+            <option value="Elementary">
+                Elementary
+            </option>
+
+            <option value="Intermediate">
+                Intermediate
+            </option>
+
+            <option value="Advanced">
+                Advanced
+            </option>
+
+        </select>
+
+
+        <label for="lessonTopic">
+            📚 Topic
+        </label>
+
+        <select
+            id="lessonTopic"
+            class="lessonSelector"
+        >
+
+            <option value="Daily Life">
+                Daily Life
+            </option>
+
+            <option value="School & Education">
+                School & Education
+            </option>
+
+            <option value="Travel">
+                Travel
+            </option>
+
+            <option value="Shopping">
+                Shopping
+            </option>
+
+            <option value="Food & Restaurant">
+                Food & Restaurant
+            </option>
+
+            <option value="Work & Office">
+                Work & Office
+            </option>
+
+            <option value="Grammar">
+                Grammar
+            </option>
+
+            <option value="Vocabulary">
+                Vocabulary
+            </option>
+
+            <option value="Conversation">
+                Conversation
+            </option>
+
+        </select>
+
 
         <button
             id="generateLessonButton"
