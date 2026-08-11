@@ -344,16 +344,50 @@ if (generateLessonButton) {
 
             try {
 
-                /* --------------------------
-                   Generate AI Lesson
-                -------------------------- */
+   
+/* --------------------------
+   Read selected Level & Topic
+-------------------------- */
 
-                const result =
-                    await EBLessonGenerator.generateFromAI(
-                        "Beginner",
-                        "Daily Life"
-                    );
+const levelSelect =
+    document.getElementById(
+        "lessonLevel"
+    );
 
+const topicSelect =
+    document.getElementById(
+        "lessonTopic"
+    );
+
+
+const selectedLevel =
+    levelSelect
+        ? levelSelect.value
+        : "Beginner";
+
+
+const selectedTopic =
+    topicSelect
+        ? topicSelect.value
+        : "Daily Life";
+
+
+console.log(
+    "Generating lesson:",
+    selectedLevel,
+    selectedTopic
+);
+
+
+/* --------------------------
+   Generate AI Lesson
+-------------------------- */
+
+const result =
+    await EBLessonGenerator.generateFromAI(
+        selectedLevel,
+        selectedTopic
+    );
 
                 /* --------------------------
                    Check result
