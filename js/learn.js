@@ -286,8 +286,13 @@ if (generateLessonButton) {
 
 
                     alert(
-                        "Sorry, we could not generate a new lesson. Please try again."
-                    );
+    "AI Lesson Generation Failed.\n\n" +
+    (
+        result && result.error
+            ? result.error
+            : "Unknown error"
+    )
+);
 
 
                     return;
@@ -414,9 +419,12 @@ if (generateLessonButton) {
 
     function openLesson(lessonId) {
 
-        const lesson =
-            lessons[lessonId];
+        const lessons =
+    getLessons();
 
+
+const lesson =
+    lessons[lessonId];
 
         if (!lesson) {
 
