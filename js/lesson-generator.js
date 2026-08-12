@@ -380,10 +380,31 @@ function validateLesson(lesson) {
             }
 
 
-            const result =
-                createLesson(
-                    aiLesson
-                );
+            /* --------------------------------------
+   Apply user-selected metadata
+-------------------------------------- */
+
+const generatedLesson = {
+
+    ...aiLesson,
+
+    level:
+        level,
+
+    category:
+        topic
+
+};
+
+
+/* --------------------------------------
+   Validate and save lesson
+-------------------------------------- */
+
+const result =
+    createLesson(
+        generatedLesson
+    );
 
 
             return result;
