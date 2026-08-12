@@ -19,62 +19,138 @@
     /* ==========================================
        VALIDATE LESSON
     ========================================== */
+  
+function validateLesson(lesson) {
 
-    function validateLesson(lesson) {
+    /* --------------------------------------
+       Basic lesson object
+    -------------------------------------- */
 
-        if (
-            !lesson ||
-            typeof lesson !== "object"
-        ) {
+    if (
+        !lesson ||
+        typeof lesson !== "object"
+    ) {
 
-            return false;
-
-        }
-
-
-        if (
-            !lesson.title ||
-            typeof lesson.title !== "string"
-        ) {
-
-            return false;
-
-        }
-
-
-        if (
-            !lesson.description ||
-            typeof lesson.description !== "string"
-        ) {
-
-            return false;
-
-        }
-
-
-        if (
-            !Array.isArray(lesson.examples) ||
-            lesson.examples.length === 0
-        ) {
-
-            return false;
-
-        }
-
-
-        if (
-            !Array.isArray(lesson.practice) ||
-            lesson.practice.length === 0
-        ) {
-
-            return false;
-
-        }
-
-
-        return true;
+        return false;
 
     }
+
+
+    /* --------------------------------------
+       Title
+    -------------------------------------- */
+
+    if (
+        typeof lesson.title !== "string" ||
+        lesson.title.trim().length === 0
+    ) {
+
+        return false;
+
+    }
+
+
+    /* --------------------------------------
+       Description
+    -------------------------------------- */
+
+    if (
+        typeof lesson.description !== "string" ||
+        lesson.description.trim().length === 0
+    ) {
+
+        return false;
+
+    }
+
+
+    /* --------------------------------------
+       Examples
+    -------------------------------------- */
+
+    if (
+        !Array.isArray(lesson.examples) ||
+        lesson.examples.length === 0
+    ) {
+
+        return false;
+
+    }
+
+
+    const validExamples =
+        lesson.examples.every(
+            function (example) {
+
+                return (
+                    example &&
+                    typeof example === "object" &&
+
+                    typeof example.hindi === "string" &&
+                    example.hindi.trim().length > 0 &&
+
+                    typeof example.english === "string" &&
+                    example.english.trim().length > 0
+                );
+
+            }
+        );
+
+
+    if (!validExamples) {
+
+        return false;
+
+    }
+
+
+    /* --------------------------------------
+       Practice
+    -------------------------------------- */
+
+    if (
+        !Array.isArray(lesson.practice) ||
+        lesson.practice.length === 0
+    ) {
+
+        return false;
+
+    }
+
+
+    const validPractice =
+        lesson.practice.every(
+            function (practiceItem) {
+
+                return (
+                    practiceItem &&
+                    typeof practiceItem === "object" &&
+
+                    typeof practiceItem.hindi === "string" &&
+                    practiceItem.hindi.trim().length > 0 &&
+
+                    typeof practiceItem.english === "string" &&
+                    practiceItem.english.trim().length > 0
+                );
+
+            }
+        );
+
+
+    if (!validPractice) {
+
+        return false;
+
+    }
+
+
+    /* --------------------------------------
+       Lesson validation passed
+    -------------------------------------- */
+
+    return true;
+
+}
 
 
     /* ==========================================
