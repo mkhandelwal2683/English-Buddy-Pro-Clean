@@ -118,17 +118,18 @@ function showLearnLanding() {
         behavior: "smooth"
 
     });
-
 }
    
-    /* ==========================================
-       SHOW LESSON LIST
-    ========================================== */
+/* ==========================================
+   SHOW LESSON LIST
+========================================== */
 
-    function showLessonList() {
-const lessons =
-    getLessons();
-       
+function showLessonList(page = currentLessonPage) {
+
+    const lessons =
+        getLessons();
+
+
     const container =
         getLessonList();
 
@@ -144,10 +145,65 @@ const lessons =
     }
 
 
+    /* ======================================
+       PREPARE LESSON DATA
+    ====================================== */
+
+    const lessonIds =
+        Object.keys(lessons);
+
+
+    const totalLessons =
+        lessonIds.length;
+
+
+    const totalPages =
+        Math.max(
+            1,
+            Math.ceil(
+                totalLessons /
+                LESSONS_PER_PAGE
+            )
+        );
+
+
+    /* --------------------------------------
+       Keep requested page within range
+    -------------------------------------- */
+
+    currentLessonPage =
+        Math.min(
+            Math.max(
+                Number(page) || 1,
+                1
+            ),
+            totalPages
+        );
+
+
+    const startIndex =
+        (
+            currentLessonPage - 1
+        ) *
+        LESSONS_PER_PAGE;
+
+
+    const visibleLessonIds =
+        lessonIds.slice(
+            startIndex,
+            startIndex +
+            LESSONS_PER_PAGE
+        );
+
+
+    /* ======================================
+       BUILD VISIBLE LESSONS
+    ====================================== */
+
     let lessonsHTML = "";
 
 
-    Object.keys(lessons).forEach(
+    visibleLessonIds.forEach(
         function (lessonId) {
 
             const lesson =
@@ -188,15 +244,15 @@ const lessons =
                     </p>
 
                     <button
-    class="primaryButton lessonButton"
-    data-lesson="${lessonId}"
->
-    ${
-        completed
-            ? "📖 Review Lesson"
-            : "Start Lesson"
-    }
-</button>
+                        class="primaryButton lessonButton"
+                        data-lesson="${lessonId}"
+                    >
+                        ${
+                            completed
+                                ? "📖 Review Lesson"
+                                : "Start Lesson"
+                        }
+                    </button>
 
                 </div>
 
@@ -206,7 +262,90 @@ const lessons =
     );
 
 
-        container.innerHTML = `
+    /* ======================================
+       BUILD PAGINATION
+    ====================================== */
+
+    let paginationHTML = "";
+
+
+    if (totalPages > 1) {
+
+        paginationHTML = `
+
+            <div class="lessonPagination">
+
+                <button
+                    class="paginationButton"
+                    id="previousLessonPage"
+                    ${
+                        currentLessonPage === 1
+                            ? "disabled"
+                            : ""
+                    }
+                >
+                    ‹ Previous
+                </button>
+
+
+                <div class="paginationNumbers">
+        `;
+
+
+        for (
+            let pageNumber = 1;
+            pageNumber <= totalPages;
+            pageNumber++
+        ) {
+
+            paginationHTML += `
+
+                <button
+                    class="paginationNumber ${
+                        pageNumber ===
+                        currentLessonPage
+                            ? "active"
+                            : ""
+                    }"
+                    data-page="${pageNumber}"
+                >
+                    ${pageNumber}
+                </button>
+
+            `;
+
+        }
+
+
+        paginationHTML += `
+
+                </div>
+
+
+                <button
+                    class="paginationButton"
+                    id="nextLessonPage"
+                    ${
+                        currentLessonPage === totalPages
+                            ? "disabled"
+                            : ""
+                    }
+                >
+                    Next ›
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* ======================================
+       RENDER LESSON LIBRARY
+    ====================================== */
+
+    container.innerHTML = `
 
         <div class="generateLessonCard">
 
@@ -216,6 +355,7 @@ const lessons =
                 Choose your level and topic,
                 then generate a fresh English lesson.
             </p>
+
 
             <div class="lessonGeneratorField">
 
@@ -310,176 +450,175 @@ const lessons =
 
         </div>
 
+
         ${lessonsHTML}
+
+
+        ${paginationHTML}
 
     `;
 
-/* ======================================
-   AI LESSON GENERATOR
-====================================== */
 
-const generateLessonButton =
-    document.getElementById(
-        "generateLessonButton"
-    );
+    /* ======================================
+       AI LESSON GENERATOR
+    ====================================== */
 
-
-if (generateLessonButton) {
-
-    generateLessonButton.addEventListener(
-        "click",
-        async function () {
-
-            /* ------------------------------
-               Prevent duplicate requests
-            ------------------------------ */
-
-            generateLessonButton.disabled =
-                true;
+    const generateLessonButton =
+        document.getElementById(
+            "generateLessonButton"
+        );
 
 
-            generateLessonButton.textContent =
-                "⏳ Generating Lesson...";
+    if (generateLessonButton) {
+
+        generateLessonButton.addEventListener(
+            "click",
+            async function () {
+
+                generateLessonButton.disabled =
+                    true;
 
 
-            try {
-
-   
-/* --------------------------
-   Read selected Level & Topic
--------------------------- */
-
-const levelSelect =
-    document.getElementById(
-        "lessonLevel"
-    );
-
-const topicSelect =
-    document.getElementById(
-        "lessonTopic"
-    );
+                generateLessonButton.textContent =
+                    "⏳ Generating Lesson...";
 
 
-const selectedLevel =
-    levelSelect
-        ? levelSelect.value
-        : "Beginner";
+                try {
+
+                    /* --------------------------
+                       Read selected Level & Topic
+                    -------------------------- */
+
+                    const levelSelect =
+                        document.getElementById(
+                            "lessonLevel"
+                        );
 
 
-const selectedTopic =
-    topicSelect
-        ? topicSelect.value
-        : "Daily Life";
+                    const topicSelect =
+                        document.getElementById(
+                            "lessonTopic"
+                        );
 
 
-console.log(
-    "Generating lesson:",
-    selectedLevel,
-    selectedTopic
-);
+                    const selectedLevel =
+                        levelSelect
+                            ? levelSelect.value
+                            : "Beginner";
 
 
-/* --------------------------
-   Generate AI Lesson
--------------------------- */
+                    const selectedTopic =
+                        topicSelect
+                            ? topicSelect.value
+                            : "Daily Life";
 
-const result =
-    await EBLessonGenerator.generateFromAI(
-        selectedLevel,
-        selectedTopic
-    );
 
-                /* --------------------------
-                   Check result
-                -------------------------- */
+                    console.log(
+                        "Generating lesson:",
+                        selectedLevel,
+                        selectedTopic
+                    );
 
-                if (
-                    !result ||
-                    result.success !== true
-                ) {
 
-                    console.error(
-                        "AI lesson generation failed:",
-                        result
+                    /* --------------------------
+                       Generate AI Lesson
+                    -------------------------- */
+
+                    const result =
+                        await EBLessonGenerator
+                            .generateFromAI(
+                                selectedLevel,
+                                selectedTopic
+                            );
+
+
+                    /* --------------------------
+                       Check result
+                    -------------------------- */
+
+                    if (
+                        !result ||
+                        result.success !== true
+                    ) {
+
+                        console.error(
+                            "AI lesson generation failed:",
+                            result
+                        );
+
+
+                        alert(
+                            "AI Lesson Generation Failed.\n\n" +
+                            (
+                                result &&
+                                result.error
+                                    ? result.error
+                                    : "Unknown error"
+                            )
+                        );
+
+
+                        return;
+
+                    }
+
+
+                    /* --------------------------
+                       Success
+                    -------------------------- */
+
+                    console.log(
+                        "AI lesson generated:",
+                        result.lesson
                     );
 
 
                     alert(
-    "AI Lesson Generation Failed.\n\n" +
-    (
-        result && result.error
-            ? result.error
-            : "Unknown error"
-    )
-);
+                        "🎉 New lesson generated successfully!"
+                    );
 
 
-                    return;
+                    /* --------------------------
+                       Return to first page
+                    -------------------------- */
+
+                    currentLessonPage = 1;
+
+
+                    /* --------------------------
+                       Refresh lesson library
+                    -------------------------- */
+
+                    showLessonList(
+                        currentLessonPage
+                    );
+
+
+                    window.scrollTo({
+
+                        top: 0,
+
+                        behavior: "smooth"
+
+                    });
 
                 }
 
+                catch (error) {
 
-                /* --------------------------
-                   Success
-                -------------------------- */
-
-                console.log(
-                    "AI lesson generated:",
-                    result.lesson
-                );
+                    console.error(
+                        "Generate lesson error:",
+                        error
+                    );
 
 
-                alert(
-                    "🎉 New lesson generated successfully!"
-                );
+                    alert(
+                        "Something went wrong while generating the lesson."
+                    );
 
+                }
 
-                /* --------------------------
-                   Refresh lesson library
-                -------------------------- */
-
-                showLessonList();
-
-
-                /* --------------------------
-                   Scroll to top
-                -------------------------- */
-
-                window.scrollTo({
-
-                    top: 0,
-
-                    behavior: "smooth"
-
-                });
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "Generate lesson error:",
-                    error
-                );
-
-
-                alert(
-                    "Something went wrong while generating the lesson."
-                );
-
-            }
-
-            finally {
-
-                /* --------------------------
-                   Restore button
-                -------------------------- */
-
-                if (
-                    document.getElementById(
-                        "generateLessonButton"
-                    )
-                ) {
+                finally {
 
                     const button =
                         document.getElementById(
@@ -487,21 +626,29 @@ const result =
                         );
 
 
-                    button.disabled =
-                        false;
+                    if (button) {
+
+                        button.disabled =
+                            false;
 
 
-                    button.textContent =
-                        "✨ Generate New Lesson";
+                        button.textContent =
+                            "✨ Generate New Lesson";
+
+                    }
 
                 }
 
             }
+        );
 
-        }
-    );
+    }
 
-}
+
+    /* ======================================
+       LESSON BUTTON EVENTS
+    ====================================== */
+
     const buttons =
         container.querySelectorAll(
             ".lessonButton"
@@ -509,29 +656,146 @@ const result =
 
 
     buttons.forEach(
-    function (button) {
+        function (button) {
 
-        button.addEventListener(
+            button.addEventListener(
+                "click",
+                function () {
+
+                    const lessonId =
+                        Number(
+                            button.dataset.lesson
+                        );
+
+
+                    openLesson(
+                        lessonId
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    /* ======================================
+       PAGINATION EVENTS
+    ====================================== */
+
+    const previousButton =
+        document.getElementById(
+            "previousLessonPage"
+        );
+
+
+    if (previousButton) {
+
+        previousButton.addEventListener(
             "click",
             function () {
 
-                const lessonId =
-                    Number(
-                        button.dataset.lesson
+                if (
+                    currentLessonPage > 1
+                ) {
+
+                    showLessonList(
+                        currentLessonPage - 1
                     );
 
-                openLesson(
-                    lessonId
-                );
+                    window.scrollTo({
+
+                        top: 0,
+
+                        behavior: "smooth"
+
+                    });
+
+                }
 
             }
         );
 
     }
-);
+
+
+    const nextButton =
+        document.getElementById(
+            "nextLessonPage"
+        );
+
+
+    if (nextButton) {
+
+        nextButton.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    currentLessonPage <
+                    totalPages
+                ) {
+
+                    showLessonList(
+                        currentLessonPage + 1
+                    );
+
+                    window.scrollTo({
+
+                        top: 0,
+
+                        behavior: "smooth"
+
+                    });
+
+                }
+
+            }
+        );
+
+    }
+
+
+    const pageButtons =
+        container.querySelectorAll(
+            ".paginationNumber"
+        );
+
+
+    pageButtons.forEach(
+        function (button) {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    const selectedPage =
+                        Number(
+                            button.dataset.page
+                        );
+
+
+                    showLessonList(
+                        selectedPage
+                    );
+
+
+                    window.scrollTo({
+
+                        top: 0,
+
+                        behavior: "smooth"
+
+                    });
+
+                }
+            );
+
+        }
+    );
 
 }
-
+   
     /* ==========================================
        OPEN LESSON
     ========================================== */
