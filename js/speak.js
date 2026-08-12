@@ -36,8 +36,9 @@
 
     let finalTranscript = "";
 
-    let restartTimer = null;
+let finalSegments = [];
 
+let restartTimer = null;
 
     /* ==========================================
        INITIALIZE SPEECH ENGINE
@@ -98,61 +99,163 @@
 
 
         /* ======================================
-           SPEECH RESULT
-        ====================================== */
+        /* ======================================
+   SPEECH RESULT
+====================================== */
 
-        recognition.onresult =
-            function (event) {
+recognition.onresult =
+    function (event) {
 
-                let interimTranscript =
-                    "";
+        let interimTranscript = "";
+
+
+        for (
+            let i = event.resultIndex;
+            i < event.results.length;
+            i++
+        ) {
+
+            const result =
+                event.results[i];
+
+            const transcript =
+                result[0].transcript.trim();
+
+
+            if (!transcript) {
+
+                continue;
+
+            }
+
+
+            /* ----------------------------------
+               FINAL RESULT
+            ---------------------------------- */
+
+            if (result.isFinal) {
+
+                /*
+                   Chrome/Android can progressively
+                   return the same spoken phrase.
+
+                   Example:
+
+                   "good"
+                   "good morning"
+                   "good morning I"
+
+                   Do not append these as separate
+                   sentences.
+                */
+
+                const lastIndex =
+                    finalSegments.length - 1;
+
+
+                const lastSegment =
+                    lastIndex >= 0
+                        ? finalSegments[lastIndex]
+                        : "";
+
+
+                const currentLower =
+                    transcript.toLowerCase();
+
+
+                const lastLower =
+                    lastSegment.toLowerCase();
 
 
                 /*
-                   Process only the results supplied
-                   by the current recognition event.
+                   New result extends the previous
+                   result.
 
-                   Final results are added once.
+                   Example:
+
+                   good
+                   good morning
+
+                   becomes:
+
+                   good morning
                 */
 
-                for (
-                    let i = event.resultIndex;
-                    i < event.results.length;
-                    i++
+                if (
+                    lastSegment &&
+                    currentLower.startsWith(
+                        lastLower
+                    )
                 ) {
 
-                    const result =
-                        event.results[i];
-
-
-                    const transcript =
-                        result[0].transcript;
-
-
-                    if (
-                        result.isFinal
-                    ) {
-
-                        finalTranscript +=
-                            transcript + " ";
-
-                    }
-
-                    else {
-
-                        interimTranscript +=
-                            transcript;
-
-                    }
+                    finalSegments[lastIndex] =
+                        transcript;
 
                 }
 
 
-                updateTranscript(
-                    interimTranscript
-                );
+                /*
+                   Previous result is an extension
+                   of the current result.
 
-            };
+                   Ignore the shorter duplicate.
+                */
+
+                else if (
+                    lastSegment &&
+                    lastLower.startsWith(
+                        currentLower
+                    )
+                ) {
+
+                    // Ignore duplicate shorter result.
+
+                }
+
+
+                /*
+                   Completely new speech.
+                */
+
+                else {
+
+                    finalSegments.push(
+                        transcript
+                    );
+
+                }
+
+            }
+
+
+            /* ----------------------------------
+               INTERIM RESULT
+            ---------------------------------- */
+
+            else {
+
+                interimTranscript +=
+                    transcript + " ";
+
+            }
+
+        }
+
+
+        /*
+           Rebuild final transcript from the
+           cleaned final segments.
+        */
+
+        finalTranscript =
+            finalSegments.join(" ");
+
+
+        updateTranscript(
+            interimTranscript.trim()
+        );
+
+    };
 
 
         /* ======================================
@@ -416,10 +519,12 @@
 
 
         finalTranscript =
-            "";
+    "";
 
+finalSegments =
+    [];
 
-        clearTranscript();
+clearTranscript();
 
 
         recognition.lang =
@@ -605,7 +710,10 @@
 
 
         finalTranscript =
-            "";
+    "";
+
+finalSegments =
+    [];
 
 
         transcriptElement.dataset.finalTranscript =
