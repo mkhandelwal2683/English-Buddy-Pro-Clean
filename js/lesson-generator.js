@@ -204,7 +204,72 @@ function validateLesson(lesson) {
 
     }
 
+/* ==========================================
+   CHECK DUPLICATE LESSON
+========================================== */
 
+function isDuplicateLesson(title) {
+
+    if (
+        !title ||
+        typeof title !== "string"
+    ) {
+
+        return false;
+
+    }
+
+
+    if (
+        typeof EBLessonEngine === "undefined" ||
+        typeof EBLessonEngine.getAll !== "function"
+    ) {
+
+        return false;
+
+    }
+
+
+    const lessons =
+        EBLessonEngine.getAll();
+
+
+    const normalizedTitle =
+        title
+            .trim()
+            .toLowerCase();
+
+
+    return Object.keys(lessons).some(
+        function (lessonId) {
+
+            const lesson =
+                lessons[lessonId];
+
+
+            if (
+                !lesson ||
+                typeof lesson.title !== "string"
+            ) {
+
+                return false;
+
+            }
+
+
+            return (
+                lesson.title
+                    .trim()
+                    .toLowerCase()
+                ===
+                normalizedTitle
+            );
+
+        }
+    );
+
+}
+   
     /* ==========================================
        CREATE GENERATED LESSON
     ========================================== */
@@ -252,6 +317,30 @@ function validateLesson(lesson) {
 
         }
 
+/* --------------------------------------
+   Prevent duplicate lesson
+-------------------------------------- */
+
+if (
+    isDuplicateLesson(
+        lessonData.title
+    )
+) {
+
+    console.warn(
+        "Lesson Generator: duplicate lesson detected."
+    );
+
+    return {
+
+        success: false,
+
+        error:
+            "A lesson with this title already exists."
+
+    };
+
+}
 
         const lessonId =
             getNextLessonId();
@@ -439,20 +528,22 @@ const result =
 
     window.EBLessonGenerator = {
 
-        validate:
-            validateLesson,
+    validate:
+        validateLesson,
 
-        getNextId:
-            getNextLessonId,
+    isDuplicate:
+        isDuplicateLesson,
 
-        create:
-            createLesson,
+    getNextId:
+        getNextLessonId,
 
-        generateFromAI:
-            generateFromAI
+    create:
+        createLesson,
 
-    };
+    generateFromAI:
+        generateFromAI
 
+};
 
     /* ==========================================
        INITIALIZATION
