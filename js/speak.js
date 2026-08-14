@@ -949,16 +949,39 @@ finalSegments =
     );
 
 /* ==========================================
-   TEMPORARY AI SPEAKING COACH TEST
+   AI SPEAKING COACH
 ========================================== */
 
-async function testSpeakingAI() {
+async function analyzeSpeaking() {
 
     const button =
         document.getElementById(
-            "testSpeakingAI"
+            "analyzeSpeaking"
         );
 
+
+    const transcript =
+        finalTranscript.trim();
+
+
+    /* --------------------------------------
+       CHECK TRANSCRIPT
+    -------------------------------------- */
+
+    if (!transcript) {
+
+        alert(
+            "🎙️ Please speak something first."
+        );
+
+        return;
+
+    }
+
+
+    /* --------------------------------------
+       UPDATE BUTTON
+    -------------------------------------- */
 
     if (button) {
 
@@ -971,11 +994,20 @@ async function testSpeakingAI() {
     }
 
 
+    showStatus(
+        "🤖 AI is analyzing your English..."
+    );
+
+
     try {
 
-        const testTranscript =
-            "Yesterday I go to market and buy vegetables.";
+        const language =
+            getSelectedLanguage();
 
+
+        /* ----------------------------------
+           SEND TO AI WORKER
+        ---------------------------------- */
 
         const response =
             await fetch(
@@ -998,10 +1030,10 @@ async function testSpeakingAI() {
                                 "speaking",
 
                             language:
-                                "en-IN",
+                                language,
 
                             transcript:
-                                testTranscript
+                                transcript
 
                         })
 
@@ -1014,75 +1046,66 @@ async function testSpeakingAI() {
 
 
         console.log(
-            "AI Speaking Coach Test:",
+            "AI Speaking Coach:",
             data
         );
 
 
+        /* ----------------------------------
+           CHECK RESPONSE
+        ---------------------------------- */
+
         if (
             !response.ok ||
             !data ||
-            data.success !== true
+            data.success !== true ||
+            !data.feedback
         ) {
 
-            alert(
-                "❌ AI Speaking Coach test failed.\n\n" +
-                (
-                    data && data.error
-                        ? data.error
-                        : "Unknown error"
-                )
+            throw new Error(
+                data && data.error
+                    ? data.error
+                    : "AI analysis failed."
             );
-
-            return;
 
         }
 
 
-        /* --------------------------------------
-           Display test result
-        -------------------------------------- */
+        /* ----------------------------------
+           DISPLAY FEEDBACK
+        ---------------------------------- */
 
-        const feedback =
-            data.feedback;
-
-
-        alert(
-            "🤖 AI Speaking Coach Test Passed!\n\n" +
-
-            "Score: " +
-            feedback.overallScore +
-            "\n\n" +
-
-            "Correct Sentence:\n" +
-            feedback.correctSentence +
-            "\n\n" +
-
-            "Grammar:\n" +
-            feedback.grammarExplanation +
-            "\n\n" +
-
-            "Hindi Explanation:\n" +
-            feedback.hindiExplanation
+        displayAIFeedback(
+            data.feedback,
+            transcript
         );
 
+
+        showStatus(
+            "✅ AI analysis completed."
+        );
 
     }
 
     catch (error) {
 
         console.error(
-            "AI Speaking Coach test error:",
+            "AI Speaking Coach error:",
             error
         );
 
 
+        showStatus(
+            "⚠️ AI analysis failed."
+        );
+
+
         alert(
-            "❌ Unable to connect to AI Speaking Coach."
+            "❌ Unable to analyze your speech.\n\n" +
+            error.message
         );
 
     }
-
 
     finally {
 
@@ -1092,27 +1115,205 @@ async function testSpeakingAI() {
                 false;
 
             button.textContent =
-                "🤖 Test AI Coach";
+                "🤖 Analyze My Speech";
 
         }
 
     }
 
 }
+   /* ==========================================
+   DISPLAY AI FEEDBACK
+========================================== */
 
-   const testSpeakingAIButton =
-    document.getElementById(
-        "testSpeakingAI"
+function displayAIFeedback(
+    feedback,
+    originalTranscript
+) {
+
+    const panel =
+        document.getElementById(
+            "aiSpeakingFeedback"
+        );
+
+
+    if (!panel) {
+
+        return;
+
+    }
+
+
+    /* --------------------------------------
+       ORIGINAL
+    -------------------------------------- */
+
+    setFeedbackText(
+        "feedbackOriginal",
+        originalTranscript
     );
 
 
-if (testSpeakingAIButton) {
+    /* --------------------------------------
+       CORRECT SENTENCE
+    -------------------------------------- */
 
-    testSpeakingAIButton.addEventListener(
+    setFeedbackText(
+        "feedbackCorrect",
+        feedback.correctSentence
+    );
+
+
+    /* --------------------------------------
+       GRAMMAR
+    -------------------------------------- */
+
+    setFeedbackText(
+        "feedbackGrammar",
+        feedback.grammarExplanation
+    );
+
+
+    /* --------------------------------------
+       HINDI
+    -------------------------------------- */
+
+    setFeedbackText(
+        "feedbackHindi",
+        feedback.hindiExplanation
+    );
+
+
+    /* --------------------------------------
+       NATURAL ENGLISH
+    -------------------------------------- */
+
+    setFeedbackText(
+        "feedbackNatural",
+        feedback.naturalEnglish
+    );
+
+
+    /* --------------------------------------
+       VOCABULARY
+    -------------------------------------- */
+
+    setFeedbackText(
+        "feedbackVocabulary",
+        feedback.vocabularySuggestions
+    );
+
+
+    /* --------------------------------------
+       SCORES
+    -------------------------------------- */
+
+    setFeedbackText(
+        "feedbackGrammarScore",
+        feedback.grammarScore
+    );
+
+
+    setFeedbackText(
+        "feedbackFluencyScore",
+        feedback.fluencyScore
+    );
+
+
+    setFeedbackText(
+        "feedbackVocabularyScore",
+        feedback.vocabularyScore
+    );
+
+
+    setFeedbackText(
+        "feedbackOverallScore",
+        feedback.overallScore
+    );
+
+
+    /* --------------------------------------
+       COACH MESSAGE
+    -------------------------------------- */
+
+    setFeedbackText(
+        "feedbackCoachMessage",
+        feedback.coachMessage
+    );
+
+
+    /* --------------------------------------
+       SHOW PANEL
+    -------------------------------------- */
+
+    panel.style.display =
+        "block";
+
+
+    panel.scrollIntoView({
+
+        behavior: "smooth",
+
+        block: "start"
+
+    });
+
+}
+   /* ==========================================
+   FEEDBACK TEXT HELPER
+========================================== */
+
+function setFeedbackText(
+    elementId,
+    value
+) {
+
+    const element =
+        document.getElementById(
+            elementId
+        );
+
+
+    if (!element) {
+
+        return;
+
+    }
+
+
+    element.textContent =
+        value !== undefined &&
+        value !== null &&
+        value !== ""
+            ? value
+            : "Not available";
+
+}
+   /* ==========================================
+   AI BUTTON INITIALIZATION
+========================================== */
+
+function initializeAICoach() {
+
+    const button =
+        document.getElementById(
+            "analyzeSpeaking"
+        );
+
+
+    if (!button) {
+
+        return;
+
+    }
+
+
+    button.addEventListener(
         "click",
-        testSpeakingAI
+        analyzeSpeaking
     );
 
 }
+   
    
 })();
