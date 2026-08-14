@@ -237,16 +237,139 @@
 
             </div>
 
-            <div class="aiTestSection">
+<!-- ==========================================
+     AI SPEAKING COACH
+=========================================== -->
+
+<div class="aiCoachSection">
 
     <button
-        id="testSpeakingAI"
+        id="analyzeSpeaking"
         class="primaryButton"
     >
-        🤖 Test AI Coach
+        🤖 Analyze My Speech
     </button>
 
-            </div>
+</div>
+
+
+<div
+    id="aiSpeakingFeedback"
+    class="aiSpeakingFeedback"
+    style="display:none;"
+>
+
+    <h3>🤖 AI Speaking Coach</h3>
+
+    <div class="feedbackCard">
+
+        <h4>📝 Your Sentence</h4>
+
+        <p id="feedbackOriginal"></p>
+
+    </div>
+
+
+    <div class="feedbackCard">
+
+        <h4>✅ Correct Sentence</h4>
+
+        <p id="feedbackCorrect"></p>
+
+    </div>
+
+
+    <div class="feedbackCard">
+
+        <h4>📚 Grammar Explanation</h4>
+
+        <p id="feedbackGrammar"></p>
+
+    </div>
+
+
+    <div class="feedbackCard">
+
+        <h4>🇮🇳 Hindi Explanation</h4>
+
+        <p id="feedbackHindi"></p>
+
+    </div>
+
+
+    <div class="feedbackCard">
+
+        <h4>✨ Natural English</h4>
+
+        <p id="feedbackNatural"></p>
+
+    </div>
+
+
+    <div class="feedbackCard">
+
+        <h4>📖 Vocabulary</h4>
+
+        <p id="feedbackVocabulary"></p>
+
+    </div>
+
+
+    <div class="feedbackScores">
+
+        <div class="feedbackScore">
+
+            <span>Grammar</span>
+
+            <strong id="feedbackGrammarScore">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="feedbackScore">
+
+            <span>Fluency</span>
+
+            <strong id="feedbackFluencyScore">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="feedbackScore">
+
+            <span>Vocabulary</span>
+
+            <strong id="feedbackVocabularyScore">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="feedbackScore">
+
+            <span>Overall</span>
+
+            <strong id="feedbackOverallScore">
+                -
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="feedbackCoachMessage"
+        class="speechStatus"
+    >
+    </div>
+
+</div>
             
         </div>
 
