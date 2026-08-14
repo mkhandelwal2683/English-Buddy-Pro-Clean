@@ -948,5 +948,171 @@ finalSegments =
         }
     );
 
+/* ==========================================
+   TEMPORARY AI SPEAKING COACH TEST
+========================================== */
 
+async function testSpeakingAI() {
+
+    const button =
+        document.getElementById(
+            "testSpeakingAI"
+        );
+
+
+    if (button) {
+
+        button.disabled =
+            true;
+
+        button.textContent =
+            "⏳ AI Analyzing...";
+
+    }
+
+
+    try {
+
+        const testTranscript =
+            "Yesterday I go to market and buy vegetables.";
+
+
+        const response =
+            await fetch(
+                "https://english-buddy-clean-lesson-ai.mkhandelwal2683.workers.dev/",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            type:
+                                "speaking",
+
+                            language:
+                                "en-IN",
+
+                            transcript:
+                                testTranscript
+
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "AI Speaking Coach Test:",
+            data
+        );
+
+
+        if (
+            !response.ok ||
+            !data ||
+            data.success !== true
+        ) {
+
+            alert(
+                "❌ AI Speaking Coach test failed.\n\n" +
+                (
+                    data && data.error
+                        ? data.error
+                        : "Unknown error"
+                )
+            );
+
+            return;
+
+        }
+
+
+        /* --------------------------------------
+           Display test result
+        -------------------------------------- */
+
+        const feedback =
+            data.feedback;
+
+
+        alert(
+            "🤖 AI Speaking Coach Test Passed!\n\n" +
+
+            "Score: " +
+            feedback.overallScore +
+            "\n\n" +
+
+            "Correct Sentence:\n" +
+            feedback.correctSentence +
+            "\n\n" +
+
+            "Grammar:\n" +
+            feedback.grammarExplanation +
+            "\n\n" +
+
+            "Hindi Explanation:\n" +
+            feedback.hindiExplanation
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "AI Speaking Coach test error:",
+            error
+        );
+
+
+        alert(
+            "❌ Unable to connect to AI Speaking Coach."
+        );
+
+    }
+
+
+    finally {
+
+        if (button) {
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                "🤖 Test AI Coach";
+
+        }
+
+    }
+
+}
+
+   const testSpeakingAIButton =
+    document.getElementById(
+        "testSpeakingAI"
+    );
+
+
+if (testSpeakingAIButton) {
+
+    testSpeakingAIButton.addEventListener(
+        "click",
+        testSpeakingAI
+    );
+
+}
+   
 })();
