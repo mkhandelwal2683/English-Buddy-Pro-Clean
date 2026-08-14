@@ -913,26 +913,29 @@ finalSegments =
 
     window.EBSpeaking = {
 
-        initialize:
-            initializeSpeak,
+    initialize:
+        initializeSpeak,
 
-        start:
-            startSpeaking,
+    start:
+        startSpeaking,
 
-        stop:
-            stopSpeaking,
+    stop:
+        stopSpeaking,
 
-        clear:
-            clearTranscript,
+    clear:
+        clearTranscript,
 
-        getTranscript:
-            function () {
+    getTranscript:
+        function () {
 
-                return finalTranscript.trim();
+            return finalTranscript.trim();
 
-            }
+        },
 
-    };
+    analyze:
+        analyzeSpeaking
+
+};
 
 
     /* ==========================================
@@ -940,13 +943,15 @@ finalSegments =
     ========================================== */
 
     document.addEventListener(
-        "DOMContentLoaded",
-        function () {
+    "DOMContentLoaded",
+    function () {
 
-            initializeSpeak();
+        initializeSpeak();
 
-        }
-    );
+        initializeAICoach();
+
+    }
+);
 
 /* ==========================================
    AI SPEAKING COACH
