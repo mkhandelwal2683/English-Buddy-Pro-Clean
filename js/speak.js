@@ -1200,13 +1200,61 @@ function displayAIFeedback(
 
 
     /* --------------------------------------
-       VOCABULARY
-    -------------------------------------- */
+   VOCABULARY
+-------------------------------------- */
 
-    setFeedbackText(
-        "feedbackVocabulary",
+const vocabulary =
+    Array.isArray(
         feedback.vocabularySuggestions
-    );
+    )
+        ? feedback.vocabularySuggestions
+        : [];
+
+
+const vocabularyText =
+    vocabulary.length
+        ? vocabulary
+            .map(function (item) {
+
+                if (
+                    typeof item === "string"
+                ) {
+
+                    return item;
+
+                }
+
+
+                if (
+                    item &&
+                    item.word
+                ) {
+
+                    return (
+                        item.word +
+                        (
+                            item.meaningHindi
+                                ? " — " +
+                                  item.meaningHindi
+                                : ""
+                        )
+                    );
+
+                }
+
+
+                return "";
+
+            })
+            .filter(Boolean)
+            .join("\n")
+        : "";
+
+
+setFeedbackText(
+    "feedbackVocabulary",
+    vocabularyText
+);
 
 
     /* --------------------------------------
